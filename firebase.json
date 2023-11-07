@@ -1,0 +1,8 @@
+{
+	"hosting": {
+		"site": "sps",
+		"public": "build",
+		"ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+		"cleanUrls": true
+	}
+}

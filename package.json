@@ -1,0 +1,54 @@
+{
+	"name": "spp-frontend",
+	"version": "1.0.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint",
+		"typescript": "tsc --noEmit --composite false"
+	},
+	"dependencies": {
+		"@apollo/client": "^3.8.0-rc.2",
+		"@apollo/experimental-nextjs-app-support": "^0.5.1",
+		"@emotion/cache": "11.11.0",
+		"@emotion/react": "11.11.0",
+		"@emotion/styled": "11.11.0",
+		"@hookform/resolvers": "^3.3.2",
+		"@mui/icons-material": "5.14.15",
+		"@mui/material": "5.14.15",
+		"@mui/x-data-grid": "^6.17.0",
+		"firebase": "^10.5.2",
+		"graphql": "^16.8.1",
+		"graphql-ws": "^5.14.2",
+		"next": "14.0.1",
+		"notistack": "^3.0.1",
+		"react": "^18",
+		"react-dom": "^18",
+		"react-hook-form": "^7.47.0",
+		"react-pdf": "^7.5.1",
+		"yup": "^1.3.2"
+	},
+	"devDependencies": {
+		"@svgr/webpack": "^8.1.0",
+		"@types/node": "^20",
+		"@types/react": "^18",
+		"@types/react-dom": "^18",
+		"eslint": "^8",
+		"eslint-config-next": "14.0.1",
+		"typescript": "^5"
+	},
+	"eslintConfig": {
+		"extends": "next/core-web-vitals",
+		"rules": {
+			"no-console": "warn",
+			"import/no-unused-modules": "error"
+		}
+	},
+	"prettier": {
+		"tabWidth": 2,
+		"semi": false,
+		"useTabs": true
+	}
+}
