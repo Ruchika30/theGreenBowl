@@ -5,7 +5,7 @@ function PdfViewer() {
 	const [numPages, setNumPages] = useState(null)
 	const [pageNumber, setPageNumber] = useState(1)
 
-	const onDocumentLoadSuccess = ({ numPages }) => {
+	const onDocumentLoadSuccess = ({ numPages }: { numPages: any }) => {
 		setNumPages(numPages)
 	}
 	return (

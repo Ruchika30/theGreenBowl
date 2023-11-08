@@ -16,12 +16,6 @@ import {
 } from "@mui/material"
 
 import Image from "next/image"
-import NextLink from "next/link"
-
-import NotifIcon from "@spp/icons/notif-icon.svg"
-
-import ModalComponent from "@spp/components/elements/Modal/index"
-import ExchangeModalContent from "../app/dashboard/currencyExchange"
 import { Constants } from "@spp/constants/constants"
 
 interface Props {
@@ -57,7 +51,7 @@ function AuthNavBar() {
 		setShowMenu(false)
 	}
 
-	function ImageModal({ imageUrl }) {
+	function ImageModal({ imageUrl }: { imageUrl: string }) {
 		return (
 			<div className="modal">
 				<div className="modal-content">

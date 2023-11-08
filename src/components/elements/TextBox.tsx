@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { SetStateAction, useState } from "react"
 import {
 	Box,
 	InputAdornment,
@@ -53,7 +53,9 @@ export default function TextBox({
 	const [isFocused, setIsFocused] = useState(false)
 	const [inputValue, setInputValue] = useState("")
 
-	const handleInputChange = (event) => {
+	const handleInputChange = (event: {
+		target: { value: SetStateAction<string> }
+	}) => {
 		setInputValue(event.target.value)
 	}
 
