@@ -1,5 +1,0 @@
-[build]
-  publish = "out"  # Set the "publish" directory to "out"
-
-[build.environment]
-  NETLIFY_NEXT_PLUGIN_SKIP = "true"  # Set the "NETLIFY_NEXT_PLUGIN_SKIP" environment variable to "true"
