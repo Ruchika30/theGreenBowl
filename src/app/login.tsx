@@ -13,6 +13,10 @@ import { LogInSchema } from "@spp/app/validation"
 import NextLink from "next/link"
 import { useRouter } from "next/navigation"
 
+import { enqueueSnackbar } from "notistack"
+
+// import { login } from "@spp/lib/firebaseScript"
+
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
 
@@ -27,10 +31,10 @@ export default function LogIn() {
 	const {
 		formState: { errors },
 		handleSubmit,
-		register,
+		register
 	} = useForm({
 		mode: "onSubmit",
-		resolver: yupResolver(LogInSchema),
+		resolver: yupResolver(LogInSchema)
 	})
 
 	const [isSubmitting, setSubmitting] = React.useState(false)
@@ -38,7 +42,35 @@ export default function LogIn() {
 
 	const onHandlePasswordToggle = () => setIsVisible((v) => !v)
 
-	const handleLogIn = () => {}
+	const handleLogIn = async (data: LogInProps) => {
+		try {
+			setSubmitting(true)
+
+			const user = "h"
+
+			if (true) {
+				navigation.replace("/dashboard")
+			}
+		} catch (err: any) {
+			let message = ""
+
+			if (err.code === "auth/user-not-found") {
+				message = "Email or password is wrong!"
+			} else if (err.code === "auth/wrong-password") {
+				message = "Email or password is wrong!"
+			} else if (err.code === "auth/too-many-requests	") {
+				message = "Try again later!"
+			} else {
+				message = err.message
+			}
+
+			enqueueSnackbar(message, {
+				variant: "error"
+			})
+		} finally {
+			setSubmitting(false)
+		}
+	}
 
 	return (
 		<Box component="form" mb={2} onSubmit={handleSubmit(handleLogIn)}>

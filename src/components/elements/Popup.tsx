@@ -1,9 +1,4 @@
-import {
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogProps,
-} from "@mui/material"
+import { Dialog, DialogContent, DialogProps } from "@mui/material"
 
 interface Props {
 	children: React.ReactNode

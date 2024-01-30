@@ -9,7 +9,7 @@ import NextAppDirEmotionCacheProvider from "./EmotionCache"
 import theme from "./theme"
 
 export default function ThemeRegistry({
-	children,
+	children
 }: {
 	children: React.ReactNode
 }) {

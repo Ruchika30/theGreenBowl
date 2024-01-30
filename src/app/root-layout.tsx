@@ -4,14 +4,19 @@ import AppProvider from "@spp/context/AppProvider"
 
 import { SnackbarProvider } from "notistack"
 
+import { LocalizationProvider } from "@mui/x-date-pickers"
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
+
 export default function RootLayout({
-	children,
+	children
 }: {
 	children: React.ReactNode
 }) {
 	return (
-		<SnackbarProvider maxSnack={3} preventDuplicate>
-			<AppProvider>{children}</AppProvider>
-		</SnackbarProvider>
+		<LocalizationProvider dateAdapter={AdapterDateFns}>
+			<SnackbarProvider maxSnack={3} preventDuplicate>
+				<AppProvider>{children}</AppProvider>
+			</SnackbarProvider>
+		</LocalizationProvider>
 	)
 }

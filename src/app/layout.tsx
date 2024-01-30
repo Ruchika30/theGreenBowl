@@ -10,7 +10,7 @@ import { ApolloProvider } from "@spp/context/ApolloProvider"
 
 export const metadata = {
 	title: "SPP",
-	description: "SPP",
+	description: "SPP"
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {

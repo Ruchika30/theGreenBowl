@@ -7,7 +7,13 @@ export default function Loading() {
 		<Box display="flex" width="100vw" height="100vh">
 			<Box margin="auto" textAlign="center">
 				<Box mb={2} mt={2}>
-					<Image src="/logo.png" alt="App Logo" width={77} height={27} />
+					<Image
+						src="/logo.png"
+						alt="App Logo"
+						width={77}
+						height={27}
+						priority
+					/>
 				</Box>
 
 				<CircularProgress />

@@ -9,7 +9,7 @@ import { useServerInsertedHTML } from "next/navigation"
 
 import type {
 	EmotionCache,
-	Options as OptionsOfCreateCache,
+	Options as OptionsOfCreateCache
 } from "@emotion/cache"
 
 export type NextAppDirEmotionCacheProviderProps = {
@@ -39,7 +39,7 @@ export default function NextAppDirEmotionCacheProvider(
 			if (cache.inserted[serialized.name] === undefined) {
 				inserted.push({
 					name: serialized.name,
-					isGlobal: !selector,
+					isGlobal: !selector
 				})
 			}
 			return prevInsert(...args)

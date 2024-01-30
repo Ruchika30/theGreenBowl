@@ -1,159 +1,139 @@
-"use client"
+import React from "react"
+
+// import { Link, useLocation } from "react-router-dom"
+
+import routes from "../constants/routes"
+import { Constants } from "../constants/constants"
 
 import {
 	Box,
-	Drawer,
+	Drawer as MuiDrawer,
+	IconButton,
 	List,
 	ListItem,
 	ListItemButton,
 	ListItemIcon,
 	ListItemText,
-	styled,
+	SvgIcon,
+	styled
 } from "@mui/material"
 
-import { Constants } from "@spp/constants/constants"
+import MenuIcon from "@mui/icons-material/Menu"
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 
-import Image from "next/image"
-import NextLink from "next/link"
-import { usePathname } from "next/navigation"
+import AuthContext from "../context/AuthContext"
 
-import HomeIcon from "@spp/icons/sidebar-icons/home.svg"
-import TaskIcon from "@spp/icons/sidebar-icons/task.svg"
-import DepositIcon from "@spp/icons/sidebar-icons/deposit.svg"
-import WithdrawalIcon from "@spp/icons/sidebar-icons/withdrawal.svg"
-import CustomerIcon from "@spp/icons/sidebar-icons/customer.svg"
-import UserIcon from "@spp/icons/sidebar-icons/user.svg"
-import MailboxIcon from "@spp/icons/sidebar-icons/mailbox.svg"
-import MerchantIcon from "@spp/icons/sidebar-icons/merchant.svg"
-import AccountIcon from "@spp/icons/sidebar-icons/account.svg"
-import ActivityLogIcon from "@spp/icons/sidebar-icons/activity-log.svg"
-import SettingIcon from "@spp/icons/sidebar-icons/setting.svg"
+const openedMixin = (theme) => ({
+	width: Constants.MENU_DRAWER_WIDTH,
+	transition: theme.transitions.create("width", {
+		easing: theme.transitions.easing.sharp,
+		duration: theme.transitions.duration.enteringScreen
+	}),
+	overflowX: "hidden"
+})
 
-const sidebarLinks = [
-	{
-		name: "Home",
-		link: "/dashboard",
-		icon: <HomeIcon />,
-	},
-	{
-		name: "Deposits",
-		link: "/dashboard/deposits",
-		icon: <DepositIcon />,
-	},
-	{
-		name: "Withdrawals",
-		link: "/dashboard/withdrawals",
-		icon: <WithdrawalIcon />,
-	},
-	{
-		name: "Tasks",
-		link: "/dashboard/tasks",
-		icon: <TaskIcon />,
-	},
-	{
-		name: "Customers",
-		link: "/dashboard/customers",
-		icon: <CustomerIcon />,
-	},
-	{
-		name: "Users",
-		link: "/dashboard/users",
-		icon: <UserIcon />,
-	},
-	{
-		name: "Mailbox",
-		link: "/dashboard/mailbox",
-		icon: <MailboxIcon />,
-	},
-	{
-		name: "Merchants",
-		link: "/dashboard/merchants",
-		icon: <MerchantIcon />,
-	},
-	{
-		name: "Accounts",
-		link: "/dashboard/accounts",
-		icon: <AccountIcon />,
-	},
-	{
-		name: "Activity Log",
-		link: "/dashboard/activity-log",
-		icon: <ActivityLogIcon />,
-	},
-	{
-		name: "Settings",
-		link: "/dashboard/settings",
-		icon: <SettingIcon />,
-	},
-]
+const closedMixin = (theme) => ({
+	transition: theme.transitions.create("width", {
+		easing: theme.transitions.easing.sharp,
+		duration: theme.transitions.duration.leavingScreen
+	}),
+	overflowX: "hidden",
+	width: `calc(${theme.spacing(7)} + 1px)`,
+	[theme.breakpoints.up("sm")]: {
+		width: `calc(${theme.spacing(8)} + 1px)`
+	}
+})
 
-const DrawerContainer = styled(Drawer)(({ theme }) => ({
-	width: Constants.DRAWER_MD_WIDTH,
+const DrawerHeader = styled(Box)(({ theme }) => ({
+	display: "flex",
+	alignItems: "center",
+	padding: theme.spacing(0, 1),
+	// necessary for content to be below app bar
+	...theme.mixins.toolbar
+}))
+
+const Indicator = styled(Box)(({ theme }) => ({
+	position: "absolute",
+	backgroundColor: theme.palette.primary.dark,
+	height: "100%",
+	width: 4
+}))
+
+const Drawer = styled(MuiDrawer, {
+	shouldForwardProp: (prop) => prop !== "open"
+})(({ theme, open }) => ({
+	width: Constants.drawerWidth,
 	flexShrink: 0,
-	"& .MuiDrawer-paper": {
-		width: Constants.DRAWER_MD_WIDTH,
-	},
-	[theme.breakpoints.up("xl")]: {
-		width: Constants.DRAWER_WIDTH,
-		"& .MuiDrawer-paper": {
-			width: Constants.DRAWER_WIDTH,
-		},
-	},
+	whiteSpace: "nowrap",
+	boxSizing: "border-box",
+	...(open && {
+		...openedMixin(theme),
+		"& .MuiDrawer-paper": openedMixin(theme)
+	}),
+	...(!open && {
+		...closedMixin(theme),
+		"& .MuiDrawer-paper": closedMixin(theme)
+	})
 }))
 
-const StyledList = styled(List)(({ theme }) => ({
-	marginTop: theme.spacing(3),
-	"& .MuiListItem-root": {
-		marginBottom: theme.spacing(1),
-	},
-	"& .MuiListItemButton-root": {
-		padding: theme.spacing(2, 5),
-	},
-	"& .MuiListItemText-root": {
-		margin: 0,
-	},
-	"& .MuiListItemText-root .MuiTypography-root, & .MuiListItemIcon-root": {
-		color: theme.palette.secondary.main,
-	},
-	"& .MuiListItemIcon-root": {
-		minWidth: 24,
-		marginRight: theme.spacing(3),
-	},
-	"& .Mui-selected .MuiTypography-root, & .Mui-selected .MuiListItemIcon-root":
-	{
-		color: theme.palette.primary.main,
-	},
-}))
+export default function SideBar({ isDrawerOpen, setIsDrawerOpen }) {
+	const { userRole } = React.useContext(AuthContext)
 
-export default function Sidebar() {
-	const pathName = usePathname()
+	const toggleSideBar = () => setIsDrawerOpen((v) => !v)
 
 	return (
-		<DrawerContainer variant="permanent">
-			<Box mr={2} mt={2} ml={4} mb={2}>
-				<Image src="/logo.png" alt="App Logo" width={77} height={27} />
-			</Box>
+		<Drawer open={isDrawerOpen} variant="permanent">
+			<DrawerHeader>
+				<ChevronLeftIcon />
+				<MenuIcon />
+				<IconButton onClick={toggleSideBar}>
+					{/* {true ? <ChevronLeftIcon /> : <MenuIcon />} */}
+					<MenuIcon />
+				</IconButton>
+			</DrawerHeader>
 
-			<StyledList>
-				{sidebarLinks.map((route, index) => (
-					<ListItem key={index} disablePadding>
-						<ListItemButton
-							selected={pathName === route.link}
-							LinkComponent={NextLink}
-							href={route.link}
+			<List>
+				<ListItem
+					// key={index}
+					disablePadding
+					// component={Link}
+					// to={routeLink.path}
+				>
+					<ListItemButton
+						// selected={activeURL}
+						sx={{
+							minHeight: 48,
+							justifyContent: isDrawerOpen ? "initial" : "center",
+							px: 2.5
+						}}
+					>
+						<ListItemIcon
+							sx={{
+								minWidth: 0,
+								mr: isDrawerOpen ? 3 : "auto",
+								justifyContent: "center"
+							}}
 						>
-							{route.icon && <ListItemIcon>{route.icon}</ListItemIcon>}
+							<SvgIcon>
+								{/* <SvgIcon color={activeURL ? "primary" : "#000"}> */}
+								{/* <Icon /> */}
+							</SvgIcon>
+						</ListItemIcon>
 
-							<ListItemText
-								primary={route.name}
-								primaryTypographyProps={{
-									variant: "SPP_H6",
-								}}
-							/>
-						</ListItemButton>
-					</ListItem>
-				))}
-			</StyledList>
-		</DrawerContainer>
+						<ListItemText
+							// primary={routeLink.name}
+							primaryTypographyProps={{
+								fontSize: 14,
+								// color: activeURL ? "primary.dark" : "#000"
+								color: "primary.dark"
+							}}
+							sx={{ opacity: isDrawerOpen ? 1 : 0 }}
+						/>
+					</ListItemButton>
+
+					{/* {activeURL && <Indicator />} */}
+				</ListItem>
+			</List>
+		</Drawer>
 	)
 }

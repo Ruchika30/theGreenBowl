@@ -1,21 +1,30 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	output: "export",
-	distDir: "build",
 	images: {
-		unoptimized: true,
+		unoptimized: true
 	},
 	experimental: {
-		webpackBuildWorker: true,
+		webpackBuildWorker: true
 	},
 	webpack(config) {
 		config.module.rules.push({
 			test: /\.svg$/i,
 			issuer: /\.[jt]sx?$/,
-			use: ["@svgr/webpack"],
+			use: ["@svgr/webpack"]
 		})
 		return config
-	},
+	}
+	// eslint: {
+	// 	ignoreDuringBuilds: true
+	// },
+	// typescript: {
+	// 	// !! WARN !!
+	// 	// Dangerously allow production builds to successfully complete even if
+	// 	// your project has type errors.
+	// 	// !! WARN !!
+	// 	ignoreBuildErrors: true
+	// }
 }
 
 module.exports = nextConfig
