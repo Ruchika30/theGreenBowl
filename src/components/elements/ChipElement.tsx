@@ -12,7 +12,7 @@ export default function ChipElement({ color, text, className }: Props) {
 			pl={1}
 			pr={1}
 			sx={{
-				borderRadius: "4px",
+				borderRadius: "2px",
 				backgroundColor: color
 			}}
 			display="flex"
@@ -20,7 +20,7 @@ export default function ChipElement({ color, text, className }: Props) {
 			className={className}
 		>
 			<Typography component="p" variant="caption" color="#FFF">
-				{text}
+				<strong>{text}</strong>
 			</Typography>
 		</Box>
 	)

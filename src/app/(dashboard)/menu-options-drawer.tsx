@@ -81,7 +81,6 @@ const FullPageMenu = ({ isOpen = "true" }) => {
 				</Box>
 			</DrawerContainer>
 		</FullPageDrawer>
-		// </Box>
 	)
 }
 

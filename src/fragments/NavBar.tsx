@@ -17,7 +17,7 @@ import {
 } from "@mui/material"
 import { Constants } from "@spp/constants/constants"
 import useToggle from "@spp/hooks/useToggle"
-import MenuOptionsDrawer from "../app/(dashboard)/MenuOptionsDrawer"
+import MenuOptionsDrawer from "../app/(dashboard)/menu-options-drawer"
 import MenuIcon from "@mui/icons-material/Menu"
 import CancelIcon from "@mui/icons-material/CancelOutlined"
 

@@ -42,6 +42,8 @@ declare module "@mui/material/styles" {
 			cadetGrey: string
 			blueGray: string
 			pastelGreen: string
+			lightGray: string
+			black: string
 		}
 	}
 
@@ -60,6 +62,8 @@ declare module "@mui/material/styles" {
 			cadetGrey: string
 			blueGray: string
 			pastelGreen: string
+			lightGray: string
+			black: string
 		}
 	}
 }
@@ -129,7 +133,9 @@ const globalTheme = createTheme({
 			lightSteelBlue: "#AFBBC2",
 			cadetGrey: "#6E7D86",
 			blueGray: "#F5FBFE",
-			pastelGreen: "#D0F288"
+			pastelGreen: "#D0F288",
+			lightGray: "#f6f6f6",
+			black: "#000000"
 		}
 	},
 	shape: {

@@ -2,8 +2,8 @@
 
 import React from "react"
 
-import { Box, styled, Typography } from "@mui/material"
-
+import { Box, styled, Typography, Link } from "@mui/material"
+import NextLink from "next/link"
 import Image from "next/image"
 
 const StyledContainer = styled(Box)(({ theme }) => ({
@@ -14,7 +14,7 @@ export default function Home() {
 	const list = [
 		{
 			value: "Menu",
-			path: ""
+			path: "/dashboard"
 		},
 		{
 			value: "Join Whatsapp Community",
@@ -55,14 +55,17 @@ export default function Home() {
 					</Box>
 
 					<Box mt={4}>
-						{list.map((item) => {
+						{list.map((item, index) => {
 							return (
 								<Box
+									key={index}
 									sx={{ border: "1px solid black", borderRadius: "20px" }}
 									p={2}
 									my={2}
 								>
-									<Typography key={item.value}>{item.value}</Typography>
+									<Link href={item.path} component={NextLink} underline="none">
+										<Typography key={item.value}>{item.value}</Typography>
+									</Link>
 								</Box>
 							)
 						})}

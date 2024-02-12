@@ -6,7 +6,8 @@ import NavBar from "@spp/fragments/NavBar"
 import { Toolbar, Box } from "@mui/material"
 import useToggle from "@spp/hooks/useToggle"
 
-import MenuOptionsDrawer from "./MenuOptionsDrawer"
+import MenuOptionsDrawer from "./menu-options-drawer"
+import { MenuBar } from "./dashboard/page"
 
 interface Props {
 	children: React.ReactNode
@@ -20,7 +21,7 @@ export default function DashboardLayout({ children }: Props) {
 	} = useToggle(false)
 
 	return (
-		<Box p={2}>
+		<Box p={1}>
 			<NavBar setOpenMenu={setOpenMenu} openMenu={openMenu} />
 
 			<Box component="main" sx={{ flexGrow: 1 }}>
