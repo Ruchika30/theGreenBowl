@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import Image from "next/image"
 
 import {
 	AppBar as MuiAppBar,
@@ -54,8 +55,8 @@ function AuthNavBar({ setMenu, openMenu }) {
 
 			<Box ml={2} sx={{ flexGrow: 1 }} />
 
-			<IconButton onClick={openCart}>
-				<Avatar alt="cart" sx={{ width: 30, height: 30, marginLeft: "auto" }} />
+			<IconButton onClick={openCart} sx={{ padding: 0 }}>
+				<Image src="logo.png" alt="App Logo" width={55} height={45} priority />
 			</IconButton>
 		</>
 	)

@@ -7,7 +7,23 @@ import NextLink from "next/link"
 import Image from "next/image"
 
 const StyledContainer = styled(Box)(({ theme }) => ({
-	backgroundColor: theme.palette.customColors.pastelGreen
+	backgroundColor: "#EBEEF1"
+}))
+
+const StyledImgContainer = styled(Box)({
+	width: "130px",
+	height: "120px",
+	borderRadius: "50%",
+	overflow: "hidden",
+	backgroundImage: 'url("/logo.png")',
+	backgroundSize: "cover",
+	backgroundPosition: "center",
+	margin: "auto"
+})
+
+const MenuContainer = styled(Box)(({ theme }) => ({
+	borderRadius: "20px",
+	backgroundColor: theme.palette.primary.contrastText
 }))
 
 export default function Home() {
@@ -40,33 +56,37 @@ export default function Home() {
 				}}
 			>
 				<Box pt={8}>
-					<Box sx={{ width: "100%" }}>
+					<StyledImgContainer mb={2} mt={2}>
 						<Image
-							src="/logo.png"
+							src="/logo_green_bg.jpeg"
 							alt="App Logo"
-							width={77}
-							height={27}
+							width={130}
+							height={120}
 							priority
 						/>
-					</Box>
+					</StyledImgContainer>
 
-					<Box>
-						<Typography>Get set. Go healthy!</Typography>
-					</Box>
+					<Typography mt={2} variant="SPP_H4" color="secondary">
+						The Green Bowl
+					</Typography>
 
 					<Box mt={4}>
 						{list.map((item, index) => {
 							return (
-								<Box
+								<MenuContainer
 									key={index}
-									sx={{ border: "1px solid black", borderRadius: "20px" }}
+									sx={{
+										borderRadius: "20px"
+									}}
 									p={2}
 									my={2}
 								>
 									<Link href={item.path} component={NextLink} underline="none">
-										<Typography key={item.value}>{item.value}</Typography>
+										<Typography color="secondary" key={item.value}>
+											{item.value}
+										</Typography>
 									</Link>
-								</Box>
+								</MenuContainer>
 							)
 						})}
 					</Box>

@@ -10,8 +10,8 @@ export default function Loading() {
 					<Image
 						src="/logo.png"
 						alt="App Logo"
-						width={77}
-						height={27}
+						width={140}
+						height={120}
 						priority
 					/>
 				</Box>

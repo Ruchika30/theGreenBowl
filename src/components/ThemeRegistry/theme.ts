@@ -41,6 +41,7 @@ declare module "@mui/material/styles" {
 			lightSteelBlue: string
 			cadetGrey: string
 			blueGray: string
+			whiteSmoke: string
 			pastelGreen: string
 			lightGray: string
 			black: string
@@ -60,6 +61,7 @@ declare module "@mui/material/styles" {
 		customColors: {
 			lightSteelBlue: string
 			cadetGrey: string
+			whiteSmoke: string
 			blueGray: string
 			pastelGreen: string
 			lightGray: string
@@ -121,7 +123,7 @@ const globalTheme = createTheme({
 		},
 		primary: {
 			light: "#7ACFFF",
-			main: "#48B1ED",
+			main: "#73B042",
 			dark: "#1B648E",
 			lighter: "#E8F7FF",
 			contrastText: "#FFFFFF"
@@ -134,8 +136,9 @@ const globalTheme = createTheme({
 			cadetGrey: "#6E7D86",
 			blueGray: "#F5FBFE",
 			pastelGreen: "#D0F288",
-			lightGray: "#f6f6f6",
-			black: "#000000"
+			whiteSmoke: "#f6f6f6",
+			black: "#000000",
+			lightGray: "#EBEEF1"
 		}
 	},
 	shape: {

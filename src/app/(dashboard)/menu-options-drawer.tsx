@@ -56,10 +56,14 @@ const FullPageMenu = ({ isOpen = "true" }) => {
 				onKeyDown={toggleDrawer(false)}
 				role="presentation"
 			>
-				<Typography variant="SPP_H5">Call us!</Typography>
-				<Typography variant="SPP_Body_1">9757024944</Typography>
+				<Typography color="secondary" variant="SPP_H5">
+					Call us!
+				</Typography>
+				<Typography color="secondary" variant="SPP_Body_1">
+					9757024944
+				</Typography>
 
-				<Typography variant="SPP_Caption" mt={4}>
+				<Typography color="secondary" variant="SPP_Caption" mt={4}>
 					Opening hours
 				</Typography>
 
@@ -69,10 +73,14 @@ const FullPageMenu = ({ isOpen = "true" }) => {
 							{menuItems.map((item) => (
 								<tr key={item.value}>
 									<td>
-										<Typography variant="SPP_Caption">{item.value}</Typography>
+										<Typography color="secondary" variant="SPP_Caption">
+											{item.value}
+										</Typography>
 									</td>
 									<td>
-										<Typography variant="SPP_Caption">{item.timing}</Typography>
+										<Typography color="secondary" variant="SPP_Caption">
+											{item.timing}
+										</Typography>
 									</td>
 								</tr>
 							))}

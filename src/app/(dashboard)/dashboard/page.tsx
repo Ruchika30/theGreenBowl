@@ -3,19 +3,19 @@ import {
 	Menu,
 	MenuItem,
 	styled,
-	Avatar,
+	Snackbar,
 	Box,
 	Link,
+	Alert as MuiAlert,
 	IconButton,
 	Typography
 } from "@mui/material"
 import NextLink from "next/link"
-
+import ShoppingCartSharpIcon from "@mui/icons-material/ShoppingCartSharp"
 import { Constants } from "@spp/constants/constants"
 import useToggle from "@spp/hooks/useToggle"
 import CancelIcon from "@mui/icons-material/CancelOutlined"
 import { useState } from "react"
-import MenuContent from "./menu-content"
 import {
 	Accordion,
 	AccordionDetails,
@@ -25,6 +25,7 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import Button from "@mui/material/Button"
 import SaladMenu from "./salad-menu"
+import Image from "next/image"
 
 const StyledMenu = styled(Box)({
 	background: "black",
@@ -55,7 +56,7 @@ export function MenuBar() {
 	}
 
 	return (
-		<Box sx={{ display: "flex", position: "sticky" }}>
+		<Box sx={{ display: "flex", position: "sticky" }} py={1}>
 			{openMenu ? (
 				<IconButton onClick={setCloseMenu}>
 					<StyledMenu px={1} borderRadius={4}>
@@ -77,7 +78,7 @@ export function MenuBar() {
 			<Box ml={2} sx={{ flexGrow: 1 }} />
 
 			<IconButton onClick={openCart}>
-				<Avatar alt="cart" sx={{ width: 30, height: 30, marginLeft: "auto" }} />
+				<ShoppingCartSharpIcon color="secondary" />
 			</IconButton>
 
 			{/* Anchor Menu */}
@@ -115,7 +116,10 @@ export function MenuBar() {
 function FoodMenu() {
 	return (
 		<>
-			<Box px={1} sx={{ position: "sticky", top: 0, zIndex: 1000 }}>
+			<Box
+				px={1}
+				sx={{ position: "sticky", top: 50, zIndex: 1000, background: "white" }}
+			>
 				<MenuBar />
 			</Box>
 

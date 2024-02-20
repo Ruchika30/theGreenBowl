@@ -6,6 +6,7 @@ import { SnackbarProvider } from "notistack"
 
 import { LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
+import { CartProvider } from "@spp/context/CartProvider"
 
 export default function RootLayout({
 	children
@@ -13,10 +14,12 @@ export default function RootLayout({
 	children: React.ReactNode
 }) {
 	return (
-		<LocalizationProvider dateAdapter={AdapterDateFns}>
-			<SnackbarProvider maxSnack={3} preventDuplicate>
-				<AppProvider>{children}</AppProvider>
-			</SnackbarProvider>
-		</LocalizationProvider>
+		<CartProvider>
+			<LocalizationProvider dateAdapter={AdapterDateFns}>
+				<SnackbarProvider maxSnack={1} preventDuplicate>
+					<AppProvider>{children}</AppProvider>
+				</SnackbarProvider>
+			</LocalizationProvider>
+		</CartProvider>
 	)
 }
