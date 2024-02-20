@@ -1,17 +1,5 @@
 import React from "react"
-import {
-	Drawer,
-	List,
-	ListItem,
-	ListItemText,
-	styled,
-	AppBar as MuiAppBar,
-	Link,
-	Box,
-	IconButton,
-	Typography
-} from "@mui/material"
-import NextLink from "next/link"
+import { Drawer, styled, Box, Typography } from "@mui/material"
 
 const FullPageDrawer = styled(Drawer)({
 	width: "100%",
@@ -26,7 +14,7 @@ const DrawerContainer = styled("div")({
 	width: "100%"
 })
 
-const FullPageMenu = ({ isOpen = "true" }) => {
+const FullPageDrawerComponent = ({ isOpen = "true" }) => {
 	const toggleDrawer = (open) => (event) => {
 		if (
 			event.type === "keydown" &&
@@ -48,8 +36,7 @@ const FullPageMenu = ({ isOpen = "true" }) => {
 	]
 
 	return (
-		// <Box mt={4}>
-		<FullPageDrawer anchor="left" open={isOpen} onClose={toggleDrawer(false)}>
+		<FullPageDrawer anchor="right" open={isOpen} onClose={toggleDrawer(false)}>
 			<DrawerContainer
 				sx={{ marginTop: "70px", padding: 2 }}
 				onClick={toggleDrawer(false)}
@@ -92,4 +79,4 @@ const FullPageMenu = ({ isOpen = "true" }) => {
 	)
 }
 
-export default FullPageMenu
+export default FullPageDrawerComponent
