@@ -9,8 +9,8 @@ import RootLayout from "./root-layout"
 import { ApolloProvider } from "@spp/context/ApolloProvider"
 
 export const metadata = {
-	title: "SPP",
-	description: "SPP"
+	title: "TheGreenBowl",
+	description: "TheGreenBowl"
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {

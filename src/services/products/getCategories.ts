@@ -1,8 +1,8 @@
 import { apiRoutes } from "@spp/constants/apiRoutes"
 
-export const getProductList = async () => {
+export const getCategories = async () => {
 	try {
-		const response = await fetch(apiRoutes.menuItemtList, {
+		const response = await fetch(apiRoutes.menuCategories, {
 			method: "GET"
 		})
 		if (!response.ok) {

@@ -16,6 +16,7 @@ declare module "@mui/material/styles" {
 		SPP_Body_1: React.CSSProperties
 		SPP_Body_2: React.CSSProperties
 		SPP_Display_1: React.CSSProperties
+		SPP_Display_2: React.CSSProperties
 		SPP_Caption: React.CSSProperties
 		SPP_CTA: React.CSSProperties
 	}
@@ -31,6 +32,7 @@ declare module "@mui/material/styles" {
 		SPP_Body_1?: React.CSSProperties
 		SPP_Body_2?: React.CSSProperties
 		SPP_Display_1?: React.CSSProperties
+		SPP_Display_2: React.CSSProperties
 		SPP_Caption?: React.CSSProperties
 		SPP_CTA?: React.CSSProperties
 	}
@@ -82,6 +84,7 @@ declare module "@mui/material/Typography" {
 		SPP_Body_1: true
 		SPP_Body_2: true
 		SPP_Display_1: true
+		SPP_Display_2: true
 		SPP_Caption: true
 		SPP_CTA: true
 	}
@@ -213,6 +216,13 @@ const customeProperties = createTheme({
 			fontSize: 32,
 			fontWeight: 700
 		},
+		SPP_Display_2: {
+			color: globalTheme.palette.primary.main,
+			fontFamily: metropolis.style.fontFamily,
+			lineHeight: "7px",
+			fontSize: 9,
+			fontWeight: 400
+		},
 		SPP_Caption: {
 			color: globalTheme.palette.primary.main,
 			fontFamily: metropolis.style.fontFamily,
@@ -245,6 +255,7 @@ const theme = createTheme({
 					SPP_Body_1: "p",
 					SPP_Body_2: "p",
 					SPP_Display_1: "p",
+					SPP_Display_2: "p",
 					SPP_Caption: "p",
 					SPP_CTA: "p"
 				}

@@ -24,55 +24,49 @@ import {
 } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import Button from "@mui/material/Button"
-import SaladMenu from "./salad-menu"
+import MenuList from "./salad-menu"
 import Image from "next/image"
+import { getMenuAndCategories } from "@spp/services/products/getMenuAndCategories"
 
 function FoodMenu() {
+	const { isError, isLoading, productDetails } = getMenuAndCategories()
+
+	console.log("yeyye--", productDetails)
+
+	if (isLoading) {
+		return <Typography>Loading!</Typography>
+	}
+
+	if (isError) {
+		return (
+			<>
+				<Typography>Unable to load data</Typography>
+			</>
+		)
+	}
+
 	return (
 		<>
 			{/* Menu main content */}
 			<Box>
-				<Accordion defaultExpanded elevation={0} id="salads">
-					<AccordionSummary
-						expandIcon={<ExpandMoreIcon />}
-						aria-controls="panel1-content"
-						id="panel1-header"
-					>
-						Salads
-					</AccordionSummary>
-					<AccordionDetails>
-						<SaladMenu />
-					</AccordionDetails>
-				</Accordion>
-				<Accordion defaultExpanded elevation={0} id="smoothies">
-					<AccordionSummary
-						expandIcon={<ExpandMoreIcon />}
-						aria-controls="panel2-content"
-						id="panel2-header"
-					>
-						Smoothies
-					</AccordionSummary>
-					<AccordionDetails>
-						<SaladMenu />
-					</AccordionDetails>
-				</Accordion>
-				<Accordion defaultExpanded elevation={0}>
-					<AccordionSummary
-						expandIcon={<ExpandMoreIcon />}
-						aria-controls="panel3-content"
-						id="panel3-header"
-					>
-						Drinks
-					</AccordionSummary>
-					<AccordionDetails>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-						malesuada lacus ex, sit amet blandit leo lobortis eget.
-					</AccordionDetails>
-					<AccordionActions>
-						<Button>Cancel</Button>
-						<Button>Agree</Button>
-					</AccordionActions>
-				</Accordion>
+				{productDetails?.map((item) => {
+					return (
+						<Box key={item.categoryId}>
+							<Accordion defaultExpanded elevation={0} id="salads">
+								<AccordionSummary
+									expandIcon={<ExpandMoreIcon />}
+									aria-controls="panel1-content"
+									id="panel1-header"
+								>
+									{item.details.name}
+								</AccordionSummary>
+								<AccordionDetails>
+									<MenuList list={item.details.menus} />
+								</AccordionDetails>
+							</Accordion>
+						</Box>
+					)
+				})}
 			</Box>
 		</>
 	)

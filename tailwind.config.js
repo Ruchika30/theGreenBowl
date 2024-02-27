@@ -9,7 +9,13 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      lineClamp: {
+        '3': 3,
+        '2': 2
+      },
+    },
   },
-  plugins: [],
+  plugins: [
+  ],
 }

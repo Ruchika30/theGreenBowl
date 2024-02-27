@@ -10,9 +10,10 @@ import {
 	styled
 } from "@mui/material"
 import IncrementOperator from "./increment-operator"
-import RadioGroup from "@spp/components/elements/Radio"
+import Image from "next/image"
 import { enqueueSnackbar } from "notistack"
 import useCart from "@spp/hooks/useCart"
+import { isSafeArray } from "@spp/helpers/Utils"
 
 const StyledContainer = styled(Box)(({ theme }) => ({
 	display: "flex",
@@ -27,45 +28,25 @@ const Wrapper = styled(Box)(({ theme }) => ({
 	alignItems: "center"
 }))
 
-const list = [
-	{
-		id: "0",
-		name: "Regular",
-		value: "regular",
-		price: "Rs.100"
-	},
-	{
-		id: "1",
-		name: "Medium",
-		value: "medium",
-		price: "Rs.200"
-	},
-	{
-		id: "2",
-		name: "Large",
-		value: "large",
-		price: "Rs.300"
-	}
-]
-
 function AddToCartDrawer({
+	image,
+	options = [],
 	count,
 	setCount,
 	isOpen,
 	onClose,
 	setCloseAddToCart
 }) {
-	const { cartItems, addItem , cartCount} = useCart()
-	const [selectedValue, setSelectedValue] = useState(list[0].value)
+	const { cartItems, addItem, cartCount } = useCart()
+	const [selectedValue, setSelectedValue] = useState()
+
+	useEffect(() => {
+		if (isSafeArray(options)) setSelectedValue(options[0].value)
+	}, [options])
 
 	const handleChange = (event) => {
 		setSelectedValue(event.target.value)
 	}
-
-	useEffect(() =>{
-console.log("cartCount--", cartCount);
-
-	}, [cartCount])
 
 	const action = (snackbarId) => (
 		<>
@@ -116,70 +97,78 @@ console.log("cartCount--", cartCount);
 				onClose={onClose}
 				sx={{ zIndex: 1500 }}
 			>
-				<Box sx={{ border: "1px solid lightgrey", borderRadius: "5px" }} m={1}>
-					<List>
-						{list.map((item) => {
-							return (
-								<ListItem>
-									<StyledContainer>
-										<Typography variant="SPP_Body_1" color="secondary">
-											{item.name}
-										</Typography>
-										<Wrapper>
-											<Typography variant="SPP_Body_1" color="secondary">
-												{item.price}
-											</Typography>
-											<Radio
-												size="small"
-												checked={selectedValue === item.value}
-												onChange={handleChange}
-												value={item.value}
-												name="radio-buttons"
-												inputProps={{ "aria-label": "A" }}
-											/>
-										</Wrapper>
-									</StyledContainer>
-								</ListItem>
-							)
-						})}
-					</List>
-				</Box>
-
-				<Box sx={{ border: "1px solid lightgrey", borderRadius: "5px" }} m={1}>
-					<List>
-						<ListItem>
-							<Wrapper sx={{ width: "100%" }}>
-								<Typography variant="SPP_Body_1" color="secondary">
-									Extra sauce
-								</Typography>
-
-								<Typography variant="SPP_Body_1" color="secondary">
-									Rs.30
-								</Typography>
-							</Wrapper>
-						</ListItem>
-					</List>
-				</Box>
-
-				<Box
-					sx={{
-						display: "flex",
-						justifyContent: "space-between",
-						alignItems: "center"
-					}}
-					p={1}
-				>
-					<IncrementOperator count={count} setCount={setCount} />
-
-					<Button
-						onClick={handleAddToCart}
-						variant="contained"
-						color="primary"
-						type="submit"
-						// disabled={isSubmitting}
+				<Box>
+					<Box
+						sx={{
+							border: "1px solid lightgrey",
+							borderRadius: "5px",
+							height: "200px",
+							position: "relative" // Add position relative to contain the image
+						}}
+						m={1}
 					>
-						Add to cart
-					</Button>
+						<Image
+							src="https://res.cloudinary.com/avantika-server/image/upload/v1708843958/Sweet_Summer_llh42w.jpg"
+							alt="App Logo"
+							layout="fill" // Fill the entire container
+							objectFit="cover"
+							priority
+						/>
+					</Box>
+
+					<Box
+						sx={{ border: "1px solid lightgrey", borderRadius: "5px" }}
+						m={1}
+					>
+						<List>
+							{isSafeArray(options) &&
+								options.map((item) => {
+									return (
+										<ListItem key={item.id}>
+											<StyledContainer>
+												<Typography variant="SPP_Body_1" color="secondary">
+													{item.name}
+												</Typography>
+												<Wrapper>
+													<Typography variant="SPP_Body_1" color="secondary">
+														{item.value}
+													</Typography>
+													<Radio
+														size="small"
+														checked={selectedValue == item.value}
+														onChange={handleChange}
+														value={item.value}
+														name="radio-buttons"
+														inputProps={{ "aria-label": "A" }}
+													/>
+												</Wrapper>
+											</StyledContainer>
+										</ListItem>
+									)
+								})}
+						</List>
+					</Box>
+
+					<Box
+						sx={{
+							display: "flex",
+							justifyContent: "space-between",
+							alignItems: "center"
+						}}
+						p={1}
+					>
+						<IncrementOperator count={count} setCount={setCount} />
+
+						<Button
+							onClick={handleAddToCart}
+							variant="contained"
+							color="primary"
+							type="submit"
+							// disabled={isSubmitting}
+						>
+							Add to cart
+						</Button>
+					</Box>
 				</Box>
 			</Drawer>
 		</>
