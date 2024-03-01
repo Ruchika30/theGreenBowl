@@ -6,7 +6,7 @@ import { SnackbarProvider } from "notistack"
 
 import { LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
-import { CartProvider } from "@spp/context/CartProvider"
+import { CartProvider } from "@spp/context/cart-context/CartContextProvider"
 import {
 	QueryClient,
 	QueryClientProvider,

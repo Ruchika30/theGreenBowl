@@ -19,6 +19,7 @@ import { Constants } from "@spp/constants/constants"
 import useToggle from "@spp/hooks/useToggle"
 import CancelIcon from "@mui/icons-material/CancelOutlined"
 import ContactUsDrawer from "../app/(dashboard)/contact-us-drawer"
+import { useCategories } from "@spp/hooks/useCategories"
 
 const AppBar = styled(MuiAppBar, {
 	shouldForwardProp: (prop) => prop !== "authState"
@@ -53,6 +54,8 @@ const StyledMenu = styled(Box)({
 
 function AuthNavBar({ isOpen, setMenu, closeMenu }) {
 	const [anchorElement, setAnchorElement] = useState(null)
+	const { categoriesData, isLoadingCategories, categoriesError } =
+		useCategories()
 
 	const {
 		isOpen: openContactUs,
@@ -117,17 +120,22 @@ function AuthNavBar({ isOpen, setMenu, closeMenu }) {
 
 			{/* Anchor menu */}
 			<Menu anchorEl={anchorElement} open={isOpen} onClose={closeMenu}>
-				<MenuItem>
-					<Link
-						href="#"
-						onClick={() => handleClick({ sectionId: "salads" })}
-						component={NextLink}
-						underline="none"
-					>
-						<Typography color="secondary">Salads</Typography>
-					</Link>
-				</MenuItem>
-				<MenuItem>
+				{categoriesData?.map((item) => {
+					return (
+						<MenuItem key={item.id}>
+							<Link
+								href="#"
+								onClick={() => handleClick({ sectionId: item.name })}
+								component={NextLink}
+								underline="none"
+							>
+								<Typography color="secondary">{item.name}</Typography>
+							</Link>
+						</MenuItem>
+					)
+				})}
+
+				{/* <MenuItem>
 					<Link
 						href="#"
 						onClick={() => handleClick({ sectionId: "smoothies" })}
@@ -136,12 +144,7 @@ function AuthNavBar({ isOpen, setMenu, closeMenu }) {
 					>
 						<Typography color="secondary">Smoothies</Typography>
 					</Link>
-				</MenuItem>
-				<MenuItem>
-					<Link href="/drinks" component={NextLink} underline="none">
-						<Typography color="secondary">Drinks</Typography>
-					</Link>
-				</MenuItem>
+				</MenuItem> */}
 			</Menu>
 
 			<ContactUsDrawer isOpen={openContactUs} />

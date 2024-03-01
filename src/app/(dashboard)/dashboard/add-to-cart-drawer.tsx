@@ -12,8 +12,8 @@ import {
 import IncrementOperator from "./increment-operator"
 import Image from "next/image"
 import { enqueueSnackbar } from "notistack"
-import useCart from "@spp/hooks/useCart"
 import { isSafeArray } from "@spp/helpers/Utils"
+import { useCart } from "@spp/context/cart-context"
 
 const StyledContainer = styled(Box)(({ theme }) => ({
 	display: "flex",
@@ -28,21 +28,28 @@ const Wrapper = styled(Box)(({ theme }) => ({
 	alignItems: "center"
 }))
 
-function AddToCartDrawer({
-	image,
-	options = [],
-	count,
-	setCount,
-	isOpen,
-	onClose,
-	setCloseAddToCart
-}) {
-	const { cartItems, addItem, cartCount } = useCart()
-	const [selectedValue, setSelectedValue] = useState()
-
-	useEffect(() => {
-		if (isSafeArray(options)) setSelectedValue(options[0].value)
-	}, [options])
+function AddToCartDrawer(
+	{
+		// product,
+		// image,
+		// options = [],
+		// count,
+		// setCount,
+		// isOpen,
+		// onClose,
+		// setCloseAddToCart
+	}
+) {
+	const {
+		addProduct,
+		products,
+		selectedProduct,
+		setSelectedProduct,
+		setSelectedValue,
+		isOpen,
+		closeCart,
+		total
+	} = useCart()
 
 	const handleChange = (event) => {
 		setSelectedValue(event.target.value)
@@ -59,25 +66,14 @@ function AddToCartDrawer({
 			>
 				Go to cart
 			</Button>
-			<Button
-				sx={{ fontSize: "12px" }}
-				color="inherit"
-				onClick={() => {
-					closeSnackbar(snackbarId)
-				}}
-			>
-				Cancel
-			</Button>
 		</>
 	)
 
-	const handleAddToCart = () => {
-		addItem(selectedValue)
-		setCloseAddToCart()
-		//open snackbar
+	const openSnackbar = (count) => [
 		enqueueSnackbar(
 			<Typography variant="SPP_Caption" color="primary.contrastText">
-				{cartItems.length} Item added
+				{/* {total.productQuantity} Items added */}
+				{count} items
 			</Typography>,
 			{
 				action,
@@ -85,8 +81,15 @@ function AddToCartDrawer({
 				persist: true
 			}
 		)
+	]
 
-		//update cart
+	useEffect(() => {
+		if (total.productQuantity) openSnackbar(total.productQuantity)
+	}, [total.productQuantity])
+
+	const handleAddToCart = () => {
+		addProduct({ ...selectedProduct, quantity: 1 })
+		closeCart()
 	}
 
 	return (
@@ -94,7 +97,7 @@ function AddToCartDrawer({
 			<Drawer
 				anchor="bottom"
 				open={isOpen}
-				onClose={onClose}
+				onClose={closeCart}
 				sx={{ zIndex: 1500 }}
 			>
 				<Box>
@@ -120,7 +123,7 @@ function AddToCartDrawer({
 						sx={{ border: "1px solid lightgrey", borderRadius: "5px" }}
 						m={1}
 					>
-						<List>
+						{/* <List>
 							{isSafeArray(options) &&
 								options.map((item) => {
 									return (
@@ -146,7 +149,7 @@ function AddToCartDrawer({
 										</ListItem>
 									)
 								})}
-						</List>
+						</List> */}
 					</Box>
 
 					<Box
@@ -157,7 +160,10 @@ function AddToCartDrawer({
 						}}
 						p={1}
 					>
-						<IncrementOperator count={count} setCount={setCount} />
+						<IncrementOperator
+							count={total.productQuantity}
+							// setCount={setCount}
+						/>
 
 						<Button
 							onClick={handleAddToCart}

@@ -1,7 +1,6 @@
 "use client"
 import {
 	Menu,
-	MenuItem,
 	styled,
 	Snackbar,
 	Box,
@@ -24,20 +23,20 @@ import {
 } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import Button from "@mui/material/Button"
-import MenuList from "./salad-menu"
+import MenuList from "./menu-item"
 import Image from "next/image"
-import { getMenuAndCategories } from "@spp/services/products/getMenuAndCategories"
+import useMenu from "@spp/hooks/useMenu"
+import MenuItem from "./menu-item"
+import AddToCartDrawer from "./add-to-cart-drawer"
 
 function FoodMenu() {
-	const { isError, isLoading, productDetails } = getMenuAndCategories()
+	const { menuData, isLoadingMenu, menuError } = useMenu()
 
-	console.log("yeyye--", productDetails)
-
-	if (isLoading) {
+	if (isLoadingMenu) {
 		return <Typography>Loading!</Typography>
 	}
 
-	if (isError) {
+	if (menuError) {
 		return (
 			<>
 				<Typography>Unable to load data</Typography>
@@ -49,24 +48,39 @@ function FoodMenu() {
 		<>
 			{/* Menu main content */}
 			<Box>
-				{productDetails?.map((item) => {
+				{menuData?.map((item) => {
 					return (
-						<Box key={item.categoryId}>
-							<Accordion defaultExpanded elevation={0} id="salads">
-								<AccordionSummary
-									expandIcon={<ExpandMoreIcon />}
-									aria-controls="panel1-content"
-									id="panel1-header"
-								>
-									{item.details.name}
-								</AccordionSummary>
-								<AccordionDetails>
-									<MenuList list={item.details.menus} />
-								</AccordionDetails>
-							</Accordion>
-						</Box>
+						<>
+							<Box key={item._id}>
+								<Accordion defaultExpanded elevation={0} id="salads">
+									<AccordionSummary
+										expandIcon={<ExpandMoreIcon />}
+										aria-controls="panel1-content"
+										id={item.name}
+									>
+										{item.name}
+									</AccordionSummary>
+									<AccordionDetails>
+										{item.menus.map((menu) => {
+											return <MenuItem product={menu} key={menu.id} />
+										})}
+									</AccordionDetails>
+								</Accordion>
+							</Box>
+						</>
 					)
 				})}
+
+				<AddToCartDrawer
+				// product={selectedProduct}
+				// image={""}
+				// options={product.price}
+				// setCount={setCount}
+				// setCloseAddToCart={setCloseAddToCart}
+				// count={count}
+				// isOpen={openAddToCart}
+				// onClose={setCloseAddToCart}
+				/>
 			</Box>
 		</>
 	)
