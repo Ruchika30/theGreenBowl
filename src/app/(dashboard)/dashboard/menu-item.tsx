@@ -9,7 +9,6 @@ import { useCart } from "@spp/context/cart-context"
 
 const StyledContainer = styled(Box)({
 	flex: 1,
-	// backgroundColor: "#f6f6f6",
 	display: "flex",
 	flexDirection: "column",
 	justifyContent: "space-between"

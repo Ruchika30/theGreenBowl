@@ -1,19 +1,24 @@
+// old
+
+"use client"
 import { useEffect, useState } from "react"
 import {
 	Drawer,
 	Radio,
-	List,
-	ListItem,
+	Link,
 	Button,
 	Box,
 	Typography,
-	styled
+	styled,
+	List,
+	ListItem
 } from "@mui/material"
 import IncrementOperator from "./increment-operator"
 import Image from "next/image"
 import { enqueueSnackbar } from "notistack"
 import { isSafeArray } from "@spp/helpers/Utils"
 import { useCart } from "@spp/context/cart-context"
+import NextLink from "next/link"
 
 const StyledContainer = styled(Box)(({ theme }) => ({
 	display: "flex",
@@ -28,43 +33,28 @@ const Wrapper = styled(Box)(({ theme }) => ({
 	alignItems: "center"
 }))
 
-function AddToCartDrawer(
-	{
-		// product,
-		// image,
-		// options = [],
-		// count,
-		// setCount,
-		// isOpen,
-		// onClose,
-		// setCloseAddToCart
-	}
-) {
-	const {
-		addProduct,
-		products,
-		selectedProduct,
-		setSelectedProduct,
-		setSelectedValue,
-		isOpen,
-		closeCart,
-		total
-	} = useCart()
+function AddToCartDrawer() {
+	const { addProduct, selectedProduct, isOpen, closeCart, total } = useCart()
+	const [variant, setVariant] = useState()
+
+	console.log("selectedProduct--", selectedProduct)
 
 	const handleChange = (event) => {
-		setSelectedValue(event.target.value)
+		setVariant(event.target.value)
 	}
 
-	const action = (snackbarId) => (
+	useEffect(() => {
+		if (isSafeArray(selectedProduct?.price)) {
+			setVariant(selectedProduct?.price[0].value)
+		}
+	}, [selectedProduct])
+
+	const action = () => (
 		<>
-			<Button
-				sx={{ fontSize: "12px" }}
-				color="inherit"
-				onClick={() => {
-					alert(`I belong to snackbar with id ${snackbarId}`)
-				}}
-			>
-				Go to cart
+			<Button sx={{ fontSize: "12px" }} color="inherit">
+				<Link href={"/cart"} component={NextLink} underline="none">
+					Go to cart
+				</Link>
 			</Button>
 		</>
 	)
@@ -72,8 +62,7 @@ function AddToCartDrawer(
 	const openSnackbar = (count) => [
 		enqueueSnackbar(
 			<Typography variant="SPP_Caption" color="primary.contrastText">
-				{/* {total.productQuantity} Items added */}
-				{count} items
+				{total.productQuantity} Items added
 			</Typography>,
 			{
 				action,
@@ -88,7 +77,7 @@ function AddToCartDrawer(
 	}, [total.productQuantity])
 
 	const handleAddToCart = () => {
-		addProduct({ ...selectedProduct, quantity: 1 })
+		addProduct({ ...selectedProduct, quantity: 1, variant: variant })
 		closeCart()
 	}
 
@@ -123,9 +112,9 @@ function AddToCartDrawer(
 						sx={{ border: "1px solid lightgrey", borderRadius: "5px" }}
 						m={1}
 					>
-						{/* <List>
-							{isSafeArray(options) &&
-								options.map((item) => {
+						<List>
+							{isSafeArray(selectedProduct.price) &&
+								selectedProduct.price.map((item) => {
 									return (
 										<ListItem key={item.id}>
 											<StyledContainer>
@@ -138,7 +127,7 @@ function AddToCartDrawer(
 													</Typography>
 													<Radio
 														size="small"
-														checked={selectedValue == item.value}
+														checked={variant == item.value}
 														onChange={handleChange}
 														value={item.value}
 														name="radio-buttons"
@@ -149,7 +138,7 @@ function AddToCartDrawer(
 										</ListItem>
 									)
 								})}
-						</List> */}
+						</List>
 					</Box>
 
 					<Box

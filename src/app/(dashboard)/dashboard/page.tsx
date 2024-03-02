@@ -71,16 +71,7 @@ function FoodMenu() {
 					)
 				})}
 
-				<AddToCartDrawer
-				// product={selectedProduct}
-				// image={""}
-				// options={product.price}
-				// setCount={setCount}
-				// setCloseAddToCart={setCloseAddToCart}
-				// count={count}
-				// isOpen={openAddToCart}
-				// onClose={setCloseAddToCart}
-				/>
+				<AddToCartDrawer />
 			</Box>
 		</>
 	)

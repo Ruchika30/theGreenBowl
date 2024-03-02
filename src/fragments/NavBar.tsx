@@ -21,7 +21,7 @@ import CancelIcon from "@mui/icons-material/CancelOutlined"
 import ContactUsDrawer from "../app/(dashboard)/contact-us-drawer"
 import { useCategories } from "@spp/hooks/useCategories"
 
-const AppBar = styled(MuiAppBar, {
+export const AppBar = styled(MuiAppBar, {
 	shouldForwardProp: (prop) => prop !== "authState"
 })<{ authState: Props["authState"] }>(({ theme, authState }) => ({
 	borderLeft: "none",
