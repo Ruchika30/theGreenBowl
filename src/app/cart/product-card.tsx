@@ -12,11 +12,13 @@ const StyledContainer = styled(Box)({
 })
 
 function ProductCard({ product }) {
+	console.log("product--", product)
+
 	const { total } = useCart()
 
-	const getTotalAmount = () => {
-		const { variant, quantity } = product
-		const total = Number(variant.value * quantity)
+	const getTotalAmount = (product) => {
+		const { variant = "", quantity = "" } = product
+		const total = Number(variant?.value * quantity)
 		return total
 	}
 
@@ -73,7 +75,7 @@ function ProductCard({ product }) {
 								variant="SPP_Display_2"
 								fontWeight="bold"
 							>
-								Rs.{getTotalAmount()}
+								Rs.{getTotalAmount(product)}
 							</Typography>
 						</Box>
 					</Box>
