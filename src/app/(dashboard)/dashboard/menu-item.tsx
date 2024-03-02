@@ -39,9 +39,7 @@ function MenuItem({ product }) {
 	const handleAdd = (product) => {
 		openCart()
 		setSelectedProduct(product)
-		// console.log("itemii--", product)
 
-		// setOpenAddToCart()
 		setCount((prev) => prev + 1)
 	}
 

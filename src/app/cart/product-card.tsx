@@ -14,7 +14,12 @@ const StyledContainer = styled(Box)({
 function ProductCard({ product }) {
 	const { total } = useCart()
 
-	const getTotalAmount = () => {}
+	const getTotalAmount = () => {
+		const { variant, quantity } = product
+		const total = Number(variant.value * quantity)
+		return total
+	}
+
 	return (
 		<>
 			<Box mb={4}>
@@ -40,11 +45,11 @@ function ProductCard({ product }) {
 
 								<Box ml={1}>
 									<Typography variant="SPP_Caption" color="secondary">
-										{product.itemName || "name"}
+										{product.itemName}
 									</Typography>
 									{isSafeArray(product.price) && (
-										<Typography pt={1} variant="SPP_Caption" color="secondary">
-											Rs.{product.price[0].value || "91991"}
+										<Typography variant="SPP_Body_2" color="secondary">
+											{`(${product.variant?.name})   Rs.${product.variant?.value}`}
 										</Typography>
 									)}
 								</Box>
@@ -63,8 +68,12 @@ function ProductCard({ product }) {
 						</Box>
 
 						<Box sx={{ marginTop: "5px", display: "flex" }}>
-							<Typography color="secondary" variant="SPP_Display_2">
-								{getTotalAmount}
+							<Typography
+								color="secondary"
+								variant="SPP_Display_2"
+								fontWeight="bold"
+							>
+								Rs.{getTotalAmount()}
 							</Typography>
 						</Box>
 					</Box>

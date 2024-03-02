@@ -3,8 +3,6 @@ import { useCart } from "@spp/context/cart-context"
 import { useState } from "react"
 
 function IncrementOperator({ product, size }) {
-	console.log("heyproduct==", product)
-
 	const { increaseProductQuantity, decreaseProductQuantity } = useCart()
 
 	const handleIncrement = () => {

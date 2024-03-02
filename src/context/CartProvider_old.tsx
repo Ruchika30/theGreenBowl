@@ -3,7 +3,7 @@ import CartContext from "./CartContext"
 
 export const CartProvider = ({ children }) => {
 	const [cartItems, setCartItems] = useState([])
-	const [cartCount, setCartCount]= useState(0)
+	const [cartCount, setCartCount] = useState(0)
 
 	const addItem = (item) => {
 		setCartItems((prevCartItems) => [...prevCartItems, item])
@@ -14,12 +14,11 @@ export const CartProvider = ({ children }) => {
 	}
 
 	useEffect(() => {
-		console.log("cartItems--", cartItems)
-		setCartCount(prev => prev+1)
+		setCartCount((prev) => prev + 1)
 	}, [cartItems.length])
 
 	return (
-		<CartContext.Provider value={{cartCount, cartItems, addItem, removeItem }}>
+		<CartContext.Provider value={{ cartCount, cartItems, addItem, removeItem }}>
 			{children}
 		</CartContext.Provider>
 	)

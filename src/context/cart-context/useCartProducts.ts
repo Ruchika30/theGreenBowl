@@ -21,8 +21,6 @@ const useCartProducts = () => {
 	}
 
 	const addProduct = (newProduct) => {
-		console.log("newProduct---", newProduct)
-
 		let updatedProducts
 		const isProductAlreadyInCart = products.some(
 			(product) => newProduct.id === product.id
@@ -35,8 +33,6 @@ const useCartProducts = () => {
 		} else {
 			updatedProducts = [...products, newProduct]
 		}
-
-		console.log("updatedProducts--", updatedProducts)
 
 		setProducts(updatedProducts)
 		updateCartTotal(updatedProducts)
