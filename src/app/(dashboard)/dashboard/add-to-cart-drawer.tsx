@@ -1,5 +1,3 @@
-// old
-
 "use client"
 import { useEffect, useState } from "react"
 import {
@@ -36,16 +34,16 @@ const Wrapper = styled(Box)(({ theme }) => ({
 function AddToCartDrawer() {
 	const { addProduct, selectedProduct, isOpen, closeCart, total } = useCart()
 	const [variant, setVariant] = useState()
+	const [selectedOption, setSelectedOption] = useState()
 
-	console.log("selectedProduct--", selectedProduct)
-
-	const handleChange = (event) => {
-		setVariant(event.target.value)
+	const handleChange = (event, item) => {
+		setSelectedOption(event.target.value)
+		setVariant(item)
 	}
 
 	useEffect(() => {
 		if (isSafeArray(selectedProduct?.price)) {
-			setVariant(selectedProduct?.price[0].value)
+			setSelectedOption(selectedProduct?.price[0].value)
 		}
 	}, [selectedProduct])
 
@@ -77,7 +75,7 @@ function AddToCartDrawer() {
 	}, [total.productQuantity])
 
 	const handleAddToCart = () => {
-		addProduct({ ...selectedProduct, quantity: 1, variant: variant })
+		addProduct({ ...selectedProduct, quantity: 1, variant })
 		closeCart()
 	}
 
@@ -127,8 +125,8 @@ function AddToCartDrawer() {
 													</Typography>
 													<Radio
 														size="small"
-														checked={variant == item.value}
-														onChange={handleChange}
+														checked={selectedOption == item.value}
+														onChange={(e) => handleChange(e, item)}
 														value={item.value}
 														name="radio-buttons"
 														inputProps={{ "aria-label": "A" }}
