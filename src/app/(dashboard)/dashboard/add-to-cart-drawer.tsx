@@ -44,6 +44,7 @@ function AddToCartDrawer() {
 	useEffect(() => {
 		if (isSafeArray(selectedProduct?.price)) {
 			setSelectedOption(selectedProduct?.price[0].value)
+			setVariant(selectedProduct?.price[0])
 		}
 	}, [selectedProduct])
 
@@ -75,6 +76,8 @@ function AddToCartDrawer() {
 	}, [total.productQuantity])
 
 	const handleAddToCart = () => {
+		console.log("varianthtt---", variant)
+
 		addProduct({ ...selectedProduct, quantity: 1, variant })
 		closeCart()
 	}
@@ -147,10 +150,7 @@ function AddToCartDrawer() {
 						}}
 						p={1}
 					>
-						<IncrementOperator
-							count={total.productQuantity}
-							// setCount={setCount}
-						/>
+						<IncrementOperator product={selectedProduct} />
 
 						<Button
 							onClick={handleAddToCart}

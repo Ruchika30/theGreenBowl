@@ -1,11 +1,9 @@
+import { useState } from "react"
 import { Box, styled, Grid, Typography } from "@mui/material"
 import ChipElement from "@spp/components/elements/ChipElement"
-import useToggle from "@spp/hooks/useToggle"
-import Image from "next/image"
-import AddToCartDrawer from "./add-to-cart-drawer"
-import { useState } from "react"
 import LineClampTypography from "@spp/components/elements/LineClampTypography"
 import { useCart } from "@spp/context/cart-context"
+import Image from "next/image"
 
 const StyledContainer = styled(Box)({
 	flex: 1,
@@ -27,20 +25,14 @@ const StyledAdd = styled(Box)({
 })
 
 function MenuItem({ product }) {
-	const { openCart, setSelectedProduct } = useCart()
-	const [count, setCount] = useState(0)
+	console.log("producthhf--", product)
 
-	// const {
-	// 	isOpen: openAddToCart,
-	// 	open: setOpenAddToCart,
-	// 	close: setCloseAddToCart
-	// } = useToggle(false)
+	const { openCart, addProduct, setSelectedProduct } = useCart()
 
-	const handleAdd = (product) => {
+	const handleAdd = (e) => {
+		// addProduct({ ...product, quantity: 1 })
 		openCart()
 		setSelectedProduct(product)
-
-		setCount((prev) => prev + 1)
 	}
 
 	return (
@@ -66,7 +58,7 @@ function MenuItem({ product }) {
 							priority
 						/>
 
-						<StyledAdd onClick={() => handleAdd(product)}>Add+</StyledAdd>
+						<StyledAdd onClick={(e) => handleAdd(e)}>Add+</StyledAdd>
 					</Box>
 
 					<StyledContainer pr={1}>

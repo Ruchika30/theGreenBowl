@@ -2,7 +2,9 @@ import { Box, styled, Typography } from "@mui/material"
 import { useCart } from "@spp/context/cart-context"
 import { useState } from "react"
 
-function IncrementOperator({ product, size }) {
+function IncrementOperator({ product, size = "large" }) {
+	const defaultQty = 1
+
 	const { increaseProductQuantity, decreaseProductQuantity } = useCart()
 
 	const handleIncrement = () => {
@@ -30,7 +32,9 @@ function IncrementOperator({ product, size }) {
 					-
 				</Typography>
 
-				<Typography fontSize="10px">{product?.quantity}</Typography>
+				<Typography fontSize="10px">
+					{product?.quantity || defaultQty}
+				</Typography>
 				<Typography px={1} onClick={handleIncrement} fontSize="25px">
 					+
 				</Typography>
@@ -45,7 +49,9 @@ function IncrementOperator({ product, size }) {
 					-
 				</Typography>
 
-				<Typography fontSize="20px">{product?.quantity}</Typography>
+				<Typography fontSize="20px">
+					{product?.quantity || defaultQty}
+				</Typography>
 				<Typography px={2} onClick={handleIncrement} fontSize="25px">
 					+
 				</Typography>

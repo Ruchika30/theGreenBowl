@@ -62,11 +62,7 @@ function ProductCard({ product }) {
 					{/* stepper */}
 					<Box>
 						<Box>
-							<IncrementOperator
-								product={product}
-								size="small"
-								count={total.productQuantity}
-							/>
+							<IncrementOperator product={product} size="small" />
 						</Box>
 
 						<Box sx={{ marginTop: "5px", display: "flex" }}>
