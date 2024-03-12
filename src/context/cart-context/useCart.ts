@@ -3,8 +3,17 @@ import useCartProducts from "./useCartProducts"
 import useCartTotal from "./useCartTotal"
 
 const useCart = () => {
-	const { isOpen, setIsOpen, selectedProduct, setSelectedProduct } =
-		useCartContext()
+	const {
+		isOpen,
+		setIsOpen,
+		selectedProduct,
+		setSelectedProduct,
+		userOptions,
+		setUserOptions,
+		userAddress,
+		setUserAddress
+	} = useCartContext()
+
 	const {
 		products,
 		addProduct,
@@ -30,7 +39,11 @@ const useCart = () => {
 		increaseProductQuantity,
 		decreaseProductQuantity,
 		total,
-		updateCartTotal
+		updateCartTotal,
+		userOptions,
+		setUserOptions,
+		userAddress,
+		setUserAddress
 	}
 }
 

@@ -17,14 +17,10 @@ import ProductCard from "./product-card"
 import { closeSnackbar } from "notistack"
 import NextLink from "next/link"
 import Navbar from "../../fragments/NavBar"
+import WhatsappConfirmComponent from "./whatsapp-confirm-btn"
 
 function CartPage() {
-	const { products } = useCart()
-	const [options, setOptions] = useState({
-		sendCutlery: false,
-		sendNapkins: false,
-		useOldAddress: false
-	})
+	const { products, userOptions, setUserOptions } = useCart()
 
 	useEffect(() => {
 		/* Hide snackbar for cart page */
@@ -34,8 +30,8 @@ function CartPage() {
 	const handleProceed = () => {}
 
 	const checkboxOptions = [
-		{ name: "sendCutlery", label: "Do not send cutlery" },
-		{ name: "sendUtensils", label: "Do not send napkins" },
+		{ name: "dontSendCutlery", label: "Do not send cutlery" },
+		{ name: "dontSendNapkins", label: "Do not send napkins" },
 		{
 			name: "useOldAddress",
 			label: "I have ordered previously. Use same address"
@@ -45,36 +41,70 @@ function CartPage() {
 	const handleCheckboxChange = (event) => {
 		const { name, checked } = event.target
 
-		setOptions((prevFormData) => ({
+		setUserOptions((prevFormData) => ({
 			...prevFormData,
 			[name]: checked
 		}))
 	}
 
-	const getButtonValue = () => {
-		if (options.useOldAddress) {
-			return (
+	const goBackBtn = () => {
+		return (
+			<Button
+				style={{ width: "100%" }}
+				onClick={handleProceed}
+				variant="contained"
+				color="primary"
+				type="submit"
+				// disabled={isSubmitting}
+			>
+				<Link
+					href={"/dashboard"}
+					component={NextLink}
+					underline="none"
+					color="white"
+				>
+					Go Back
+				</Link>
+			</Button>
+		)
+	}
+
+	const proceedBtn = () => {
+		return (
+			<Button
+				style={{ width: "100%" }}
+				onClick={handleProceed}
+				variant="contained"
+				color="primary"
+				type="submit"
+				// disabled={isSubmitting}
+			>
 				<Link
 					href={"/address"}
 					component={NextLink}
 					underline="none"
 					color="white"
 				>
-					Confirm over whatsapp
+					Proceed to add Address
 				</Link>
-			)
-		}
-
-		return (
-			<Link
-				href={"/address"}
-				component={NextLink}
-				underline="none"
-				color="white"
-			>
-				Proceed to add Address
-			</Link>
+			</Button>
 		)
+	}
+
+	const getButton = () => {
+		if (isSafeArray(products)) {
+			/* 
+				1. If checked old address - Show confirmBtn
+				2. If unchecked - show proceedBtn
+			*/
+
+			if (userOptions.useOldAddress) {
+				return <WhatsappConfirmComponent />
+			} else return proceedBtn()
+		} else {
+			/* IF CART IS EMPTY */
+			return goBackBtn()
+		}
 	}
 
 	return (
@@ -117,7 +147,7 @@ function CartPage() {
 					key={item.name}
 					control={
 						<Checkbox
-							checked={options[item.name]}
+							checked={userOptions[item.name]}
 							onChange={handleCheckboxChange}
 							name={item.name}
 						/>
@@ -130,8 +160,20 @@ function CartPage() {
 				/>
 			))}
 
+			{userOptions.useOldAddress && (
+				<Typography
+					variant="SPP_Body_2"
+					color="secondary"
+					fontWeight="bold"
+					mb={1}
+				>
+					Payment details will be shared over WhatsApp
+				</Typography>
+			)}
+
 			<Box sx={{ width: "100%" }}>
-				<Button
+				{getButton()}
+				{/* <Button
 					style={{ width: "100%" }}
 					onClick={handleProceed}
 					variant="contained"
@@ -149,9 +191,9 @@ function CartPage() {
 							Go Back
 						</Link>
 					) : (
-						getButtonValue()
+						getButton()
 					)}
-				</Button>
+				</Button> */}
 			</Box>
 		</Box>
 	)

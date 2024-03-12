@@ -24,6 +24,12 @@ const CartProvider: FC = (props) => {
 	const [products, setProducts] = useState([])
 	const [selectedProduct, setSelectedProduct] = useState({})
 	const [total, setTotal] = useState(totalInitialValues)
+	const [userOptions, setUserOptions] = useState({
+		dontSendCutlery: false,
+		dontSendNapkins: false,
+		useOldAddress: false
+	})
+	const [userAddress, setUserAddress] = useState("")
 
 	const CartContextValue = {
 		isOpen,
@@ -33,7 +39,11 @@ const CartProvider: FC = (props) => {
 		selectedProduct,
 		setSelectedProduct,
 		total,
-		setTotal
+		setTotal,
+		userOptions,
+		setUserOptions,
+		userAddress,
+		setUserAddress
 	}
 
 	return (

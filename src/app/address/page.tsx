@@ -1,44 +1,32 @@
 "use client"
 
-import React, { useState } from "react"
-import {
-	TextField,
-	Checkbox,
-	FormControlLabel,
-	Link,
-	Toolbar,
-	Box,
-	Button,
-	Grid,
-	Typography
-} from "@mui/material"
+import React, { useEffect, useState } from "react"
+import { TextField, Toolbar, Box, Grid, Typography } from "@mui/material"
 import Navbar from "../../fragments/NavBar"
-import NextLink from "next/link"
 import { isNumber, isString } from "./utils"
+import { useCart } from "@spp/context/cart-context"
+import WhatsappConfirmComponent from "../cart/whatsapp-confirm-btn"
 
 function Address() {
+	const { setUserAddress } = useCart()
 	const [formData, setFormData] = useState({
 		name: "",
 		phone: "",
 		addressLine1: "",
-		addressLine2: "",
-		sendCutlery: false
+		addressLine2: ""
 	})
 
 	const [errors, setErrors] = useState({})
+
+	useEffect(() => {
+		setUserAddress(formData)
+	}, [formData])
 
 	const handleChange = (event) => {
 		const { name, value } = event.target
 		setFormData({
 			...formData,
 			[name]: value
-		})
-	}
-
-	const handleCheckboxChange = (event) => {
-		setFormData({
-			...formData,
-			sendCutlery: event.target.checked
 		})
 	}
 
@@ -77,8 +65,6 @@ function Address() {
 
 	const handleBlur = (fieldName) => {
 		const errorMessage = validateField(fieldName, formData[fieldName])
-		console.log("errorMessage--", errorMessage)
-
 		setErrors((prevErrors) => ({
 			...prevErrors,
 			[fieldName]: errorMessage
@@ -90,6 +76,18 @@ function Address() {
 			// Proceed with form submission
 			console.log("Form submitted successfully")
 		}
+	}
+
+	const checkValidity = () => {
+		const hasErrors = Object.keys(errors).some((item) => {
+			return !!errors[item]
+		})
+
+		const isEmpty = Object.keys(formData).some((item) => {
+			return !formData[item]
+		})
+
+		return hasErrors || isEmpty
 	}
 
 	return (
@@ -157,20 +155,6 @@ function Address() {
 						</Grid>
 					</Grid>
 				</form>
-
-				{/* <FormControlLabel
-					control={
-						<Checkbox
-							checked={formData.sendCutlery}
-							onChange={handleCheckboxChange}
-						/>
-					}
-					label={
-						<Typography variant="SPP_Body_1" color="secondary">
-							Do not send cutlery
-						</Typography>
-					}
-				/> */}
 			</Box>
 
 			<Typography
@@ -183,22 +167,7 @@ function Address() {
 			</Typography>
 
 			<Box sx={{ width: "100%" }}>
-				<Button
-					style={{ width: "100%" }}
-					onClick={handleProceed}
-					variant="contained"
-					color="primary"
-					type="submit"
-				>
-					<Link
-						href={"/address"}
-						component={NextLink}
-						underline="none"
-						color="white"
-					>
-						Confirm over WhatsApp
-					</Link>
-				</Button>
+				<WhatsappConfirmComponent checkDisabled={checkValidity()} />
 			</Box>
 		</Box>
 	)

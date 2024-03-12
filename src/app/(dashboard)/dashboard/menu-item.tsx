@@ -25,8 +25,6 @@ const StyledAdd = styled(Box)({
 })
 
 function MenuItem({ product }) {
-	console.log("producthhf--", product)
-
 	const { openCart, addProduct, setSelectedProduct } = useCart()
 
 	const handleAdd = (e) => {
