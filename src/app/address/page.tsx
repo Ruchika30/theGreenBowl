@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react"
 import { TextField, Toolbar, Box, Grid, Typography } from "@mui/material"
 import Navbar from "../../fragments/NavBar"
-import { isNumber, isString } from "./utils"
+import { isNumber, isString, isValidAddress } from "./utils"
 import { useCart } from "@spp/context/cart-context"
 import WhatsappConfirmComponent from "../cart/whatsapp-confirm-btn"
 
@@ -37,10 +37,10 @@ function Address() {
 			case "phone":
 				return !isNumber(value) ? "Phone must be a number" : ""
 			case "addressLine1":
-				return !isString(value) ? "Address is invalid" : ""
+				return !isValidAddress(value) ? "Address is invalid" : ""
 
 			case "addressLine2":
-				return !isString(value) ? "Address is invalid" : ""
+				return !isValidAddress(value) ? "Address is invalid" : ""
 			default:
 				return ""
 		}

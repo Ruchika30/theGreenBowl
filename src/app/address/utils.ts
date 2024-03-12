@@ -14,7 +14,7 @@ export const isNumber = (value) => {
 
 export const isValidAddress = (value) => {
 	const variable = value.trim()
-	const addressRegex = /^[a-zA-Z0-9\s.,-]+$/
+	const addressRegex = /^[a-zA-Z0-9\s., -]+$/
 
 	return !!addressRegex.test(variable)
 }
