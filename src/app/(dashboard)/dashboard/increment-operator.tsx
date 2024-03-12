@@ -2,18 +2,13 @@ import { Box, styled, Typography } from "@mui/material"
 import { useCart } from "@spp/context/cart-context"
 import { useState } from "react"
 
-function IncrementOperator({ product, size = "large" }) {
+function IncrementOperator({
+	product,
+	size = "large",
+	onClickPlus,
+	onClickMinus
+}) {
 	const defaultQty = 1
-
-	const { increaseProductQuantity, decreaseProductQuantity } = useCart()
-
-	const handleIncrement = () => {
-		increaseProductQuantity(product)
-	}
-
-	const handleDecrement = () => {
-		decreaseProductQuantity(product)
-	}
 
 	const StyledContainer = styled(Box)(({ theme }) => ({
 		// backgroundColor: theme.palette.customColors.pastelGreen,
@@ -28,14 +23,14 @@ function IncrementOperator({ product, size = "large" }) {
 	if (size == "small") {
 		return (
 			<StyledContainer>
-				<Typography px={1} onClick={handleDecrement} fontSize="25px">
+				<Typography px={1} onClick={onClickMinus} fontSize="25px">
 					-
 				</Typography>
 
-				<Typography fontSize="10px">
+				<Typography fontSize="12px" fontWeight="bold">
 					{product?.quantity || defaultQty}
 				</Typography>
-				<Typography px={1} onClick={handleIncrement} fontSize="25px">
+				<Typography px={1} onClick={onClickPlus} fontSize="25px">
 					+
 				</Typography>
 			</StyledContainer>
@@ -45,14 +40,14 @@ function IncrementOperator({ product, size = "large" }) {
 	return (
 		<>
 			<StyledContainer px={1}>
-				<Typography px={2} onClick={handleDecrement} fontSize="25px">
+				<Typography px={2} onClick={onClickMinus} fontSize="25px">
 					-
 				</Typography>
 
 				<Typography fontSize="20px">
 					{product?.quantity || defaultQty}
 				</Typography>
-				<Typography px={2} onClick={handleIncrement} fontSize="25px">
+				<Typography px={2} onClick={onClickPlus} fontSize="25px">
 					+
 				</Typography>
 			</StyledContainer>

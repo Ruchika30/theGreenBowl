@@ -12,14 +12,27 @@ const StyledContainer = styled(Box)({
 })
 
 function ProductCard({ product }) {
-	console.log("product--", product)
-
-	const { total } = useCart()
+	const {
+		total,
+		increaseProductQuantity,
+		decreaseProductQuantity,
+		removeProduct
+	} = useCart()
 
 	const getTotalAmount = (product) => {
 		const { variant = "", quantity = "" } = product
 		const total = Number(variant?.value * quantity)
 		return total
+	}
+
+	const handleIncrement = () => {
+		increaseProductQuantity(product)
+	}
+
+	const handleDecrement = () => {
+		if (product.quantity > 1) {
+			decreaseProductQuantity(product)
+		} else removeProduct(product)
 	}
 
 	return (
@@ -50,9 +63,15 @@ function ProductCard({ product }) {
 										{product.itemName}
 									</Typography>
 									{isSafeArray(product.price) && (
-										<Typography variant="SPP_Body_2" color="secondary">
-											{`(${product.variant?.name})   Rs.${product.variant?.value}`}
-										</Typography>
+										<Box sx={{ display: "flex" }}>
+											<Typography variant="SPP_Body_2" color="secondary">
+												{`(${product.variant?.name})`}
+											</Typography>
+
+											<Typography variant="SPP_Body_2" color="secondary" ml={2}>
+												{`Rs.${product.variant?.value}`}
+											</Typography>
+										</Box>
 									)}
 								</Box>
 							</Box>
@@ -62,7 +81,12 @@ function ProductCard({ product }) {
 					{/* stepper */}
 					<Box>
 						<Box>
-							<IncrementOperator product={product} size="small" />
+							<IncrementOperator
+								product={product}
+								size="small"
+								onClickPlus={handleIncrement}
+								onClickMinus={handleDecrement}
+							/>
 						</Box>
 
 						<Box sx={{ marginTop: "5px", display: "flex" }}>

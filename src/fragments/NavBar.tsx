@@ -3,7 +3,6 @@
 import React, { useState } from "react"
 import Image from "next/image"
 import NextLink from "next/link"
-
 import {
 	AppBar as MuiAppBar,
 	Box,
@@ -20,6 +19,8 @@ import useToggle from "@spp/hooks/useToggle"
 import CancelIcon from "@mui/icons-material/CancelOutlined"
 import ContactUsDrawer from "../app/(dashboard)/contact-us-drawer"
 import { useCategories } from "@spp/hooks/useCategories"
+import { useRouter } from "next/navigation"
+import { ArrowBackIosNew as BackIcon } from "@mui/icons-material"
 
 export const AppBar = styled(MuiAppBar, {
 	shouldForwardProp: (prop) => prop !== "authState"
@@ -52,7 +53,7 @@ const StyledMenu = styled(Box)({
 	color: "contrastText"
 })
 
-function AuthNavBar({ isOpen, setMenu, closeMenu }) {
+function MenuNavBar({ isOpen, setMenu, closeMenu }) {
 	const [anchorElement, setAnchorElement] = useState(null)
 	const { categoriesData, isLoadingCategories, categoriesError } =
 		useCategories()
@@ -152,22 +153,38 @@ function AuthNavBar({ isOpen, setMenu, closeMenu }) {
 	)
 }
 
-export default function NavBar() {
+export default function NavBar({ type = "basic" }) {
 	const {
 		isOpen: openMenu,
 		open: setOpenMenu,
 		close: setCloseMenu
 	} = useToggle(false)
 
+	if (type == "menu") {
+		return (
+			<>
+				<AppBar elevation={0} position="fixed" variant="outlined">
+					<Toolbar>
+						<MenuNavBar
+							setMenu={setOpenMenu}
+							isOpen={openMenu}
+							closeMenu={setCloseMenu}
+						/>
+					</Toolbar>
+				</AppBar>
+			</>
+		)
+	}
+
+	const router = useRouter()
+
 	return (
 		<>
 			<AppBar elevation={0} position="fixed" variant="outlined">
 				<Toolbar>
-					<AuthNavBar
-						setMenu={setOpenMenu}
-						isOpen={openMenu}
-						closeMenu={setCloseMenu}
-					/>
+					<IconButton color="secondary" onClick={() => router.back()}>
+						<BackIcon fontSize="small" />
+					</IconButton>
 				</Toolbar>
 			</AppBar>
 		</>

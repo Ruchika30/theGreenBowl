@@ -1,6 +1,6 @@
-import { createContext, useContext, FC, useState } from "react"
+import React, { useContext, FC, useState } from "react"
 
-const CartContext = createContext(undefined)
+const CartContext = React.createContext(undefined)
 const useCartContext = () => {
 	const context = useContext(CartContext)
 

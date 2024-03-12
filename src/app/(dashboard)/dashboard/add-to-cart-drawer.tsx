@@ -51,14 +51,19 @@ function AddToCartDrawer() {
 	const action = () => (
 		<>
 			<Button sx={{ fontSize: "12px" }} color="inherit">
-				<Link href={"/cart"} component={NextLink} underline="none">
+				<Link
+					href={"/cart"}
+					component={NextLink}
+					underline="none"
+					color="white"
+				>
 					Go to cart
 				</Link>
 			</Button>
 		</>
 	)
 
-	const openSnackbar = (count) => [
+	const openSnackbar = () => [
 		enqueueSnackbar(
 			<Typography variant="SPP_Caption" color="primary.contrastText">
 				{total.productQuantity} Items added
@@ -76,8 +81,6 @@ function AddToCartDrawer() {
 	}, [total.productQuantity])
 
 	const handleAddToCart = () => {
-		console.log("varianthtt---", variant)
-
 		addProduct({ ...selectedProduct, quantity: 1, variant })
 		closeCart()
 	}
@@ -124,7 +127,7 @@ function AddToCartDrawer() {
 												</Typography>
 												<Wrapper>
 													<Typography variant="SPP_Body_1" color="secondary">
-														{item.value}
+														Rs.{item.value}
 													</Typography>
 													<Radio
 														size="small"
@@ -145,12 +148,13 @@ function AddToCartDrawer() {
 					<Box
 						sx={{
 							display: "flex",
-							justifyContent: "space-between",
+							justifyContent: "end",
 							alignItems: "center"
 						}}
 						p={1}
 					>
-						<IncrementOperator product={selectedProduct} />
+						{/* TODO: fix the operations */}
+						{/* <IncrementOperator product={selectedProduct} /> */}
 
 						<Button
 							onClick={handleAddToCart}

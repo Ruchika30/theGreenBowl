@@ -11,7 +11,7 @@ interface Props {
 export default function DashboardLayout({ children }: Props) {
 	return (
 		<Box p={1}>
-			<NavBar />
+			<NavBar type="menu" />
 
 			<Box component="main" sx={{ flexGrow: 1 }}>
 				<Toolbar />
