@@ -32,17 +32,17 @@ export default function Home() {
 			value: "Menu",
 			path: "/dashboard"
 		},
-		{
-			value: "Join Whatsapp Community",
-			path: ""
-		},
-		{
-			value: "Review on Google",
-			path: ""
-		},
+		// {
+		// 	value: "Join Whatsapp Community",
+		// 	path: ""
+		// },
+		// {
+		// 	value: "Review on Google",
+		// 	path: ""
+		// },
 		{
 			value: "Follow on Instagram!",
-			path: ""
+			path: "https://www.instagram.com/thegreenbowl_co/"
 		}
 	]
 
