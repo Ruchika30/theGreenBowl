@@ -26,7 +26,7 @@
 			"@spp/*": ["./src/*"],
 			"types/*": ["./@types/*"]
 		},
-		"noEmitOnError": true // Prevents emitting output files on error
+		"noEmitOnError": false // Prevents emitting output files on error
 	},
 	"include": [
 		"next-env.d.ts",
