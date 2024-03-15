@@ -1,7 +1,6 @@
 "use client"
 
 import React from "react"
-import NavBar from "@spp/fragments/NavBar"
 import { Toolbar, Box } from "@mui/material"
 import MenuNavBar from "@spp/fragments/MenuBar"
 

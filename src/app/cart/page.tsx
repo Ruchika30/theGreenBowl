@@ -8,11 +8,9 @@ import {
 	FormControlLabel,
 	Typography
 } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import useCart from "@spp/context/cart-context/useCart"
-import { AppBar } from "@spp/fragments/NavBar"
 import { isSafeArray } from "@spp/helpers/Utils"
-import { useRouter } from "next/navigation"
 import ProductCard from "./product-card"
 import { closeSnackbar } from "notistack"
 import NextLink from "next/link"
@@ -38,10 +36,12 @@ function CartPage() {
 		}
 	]
 
-	const handleCheckboxChange = (event) => {
+	const handleCheckboxChange = (event: {
+		target: { name: any; checked: any }
+	}) => {
 		const { name, checked } = event.target
 
-		setUserOptions((prevFormData) => ({
+		setUserOptions((prevFormData: any) => ({
 			...prevFormData,
 			[name]: checked
 		}))
@@ -127,7 +127,7 @@ function CartPage() {
 					p={1}
 				>
 					{isSafeArray(products) ? (
-						products.map((item) => {
+						products.map((item: any) => {
 							return (
 								<>
 									<ProductCard product={item} key={item.id} />

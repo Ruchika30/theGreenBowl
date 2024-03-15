@@ -14,8 +14,8 @@ const DrawerContainer = styled("div")({
 	width: "100%"
 })
 
-const FullPageDrawerComponent = ({ isOpen = "true" }) => {
-	const toggleDrawer = (open) => (event) => {
+const FullPageDrawerComponent = ({ isOpen = true }) => {
+	const toggleDrawer = () => (event: any) => {
 		if (
 			event.type === "keydown" &&
 			(event.key === "Tab" || event.key === "Shift")
@@ -36,11 +36,11 @@ const FullPageDrawerComponent = ({ isOpen = "true" }) => {
 	]
 
 	return (
-		<FullPageDrawer anchor="right" open={isOpen} onClose={toggleDrawer(false)}>
+		<FullPageDrawer anchor="right" open={isOpen} onClose={toggleDrawer()}>
 			<DrawerContainer
 				sx={{ marginTop: "70px", padding: 2 }}
-				onClick={toggleDrawer(false)}
-				onKeyDown={toggleDrawer(false)}
+				onClick={toggleDrawer()}
+				onKeyDown={toggleDrawer()}
 				role="presentation"
 			>
 				<Typography color="secondary" variant="SPP_H5">

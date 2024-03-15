@@ -14,20 +14,18 @@ import {
 	Link,
 	styled
 } from "@mui/material"
-import { Constants } from "@spp/constants/constants"
 import useToggle from "@spp/hooks/useToggle"
 import CancelIcon from "@mui/icons-material/CancelOutlined"
 import ContactUsDrawer from "../app/(dashboard)/contact-us-drawer"
 import { useCategories } from "@spp/hooks/useCategories"
-import { useRouter } from "next/navigation"
-import { ArrowBackIosNew as BackIcon } from "@mui/icons-material"
+import { isSafeArray } from "@spp/helpers/Utils"
 
 const StyledMenu = styled(Box)({
 	background: "black",
 	color: "contrastText"
 })
 
-const StyledLogo = styled(Box)(({ theme }) => ({
+const StyledLogo = styled(Box)(() => ({
 	height: "45px",
 	width: "55px",
 	display: "flex",
@@ -37,19 +35,13 @@ const StyledLogo = styled(Box)(({ theme }) => ({
 
 export const AppBar = styled(MuiAppBar, {
 	shouldForwardProp: (prop) => prop !== "authState"
-})<{ authState: Props["authState"] }>(({ theme, authState }) => ({
+})(({ theme }) => ({
 	borderLeft: "none",
 	zIndex: theme.zIndex.drawer + 1,
 	backgroundColor: theme.palette.background.paper,
-	maxWidth:
-		authState === "authenticated"
-			? `calc(100vw - ${Constants.DRAWER_MD_WIDTH}px)`
-			: "100vw",
+	maxWidth: "100vw",
 	[theme.breakpoints.up("xl")]: {
-		maxWidth:
-			authState === "authenticated"
-				? `calc(100vw - ${Constants.DRAWER_WIDTH}px)`
-				: "100vw"
+		maxWidth: "100vw"
 	}
 }))
 
@@ -61,8 +53,7 @@ function MenuNavBar() {
 	} = useToggle(false)
 
 	const [anchorElement, setAnchorElement] = useState(null)
-	const { categoriesData, isLoadingCategories, categoriesError } =
-		useCategories()
+	const { categoriesData } = useCategories()
 
 	const {
 		isOpen: openContactUs,
@@ -128,20 +119,22 @@ function MenuNavBar() {
 
 				{/* Anchor menu */}
 				<Menu anchorEl={anchorElement} open={openMenu} onClose={setCloseMenu}>
-					{categoriesData?.map((item) => {
-						return (
-							<MenuItem key={item.id}>
-								<Link
-									href="#"
-									onClick={() => handleClick({ sectionId: item.name })}
-									component={NextLink}
-									underline="none"
-								>
-									<Typography color="secondary">{item.name}</Typography>
-								</Link>
-							</MenuItem>
-						)
-					})}
+					{isSafeArray(categoriesData)
+						? categoriesData?.map((item) => {
+								return (
+									<MenuItem key={item.id}>
+										<Link
+											href="#"
+											onClick={() => handleClick({ sectionId: item.name })}
+											component={NextLink}
+											underline="none"
+										>
+											<Typography color="secondary">{item.name}</Typography>
+										</Link>
+									</MenuItem>
+								)
+						  })
+						: null}
 				</Menu>
 
 				<ContactUsDrawer isOpen={openContactUs} />

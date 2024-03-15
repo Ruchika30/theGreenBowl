@@ -1,30 +1,7 @@
 "use client"
-import {
-	Menu,
-	styled,
-	Snackbar,
-	Box,
-	Link,
-	Alert as MuiAlert,
-	IconButton,
-	Typography
-} from "@mui/material"
-import NextLink from "next/link"
-import ShoppingCartSharpIcon from "@mui/icons-material/ShoppingCartSharp"
-import { Constants } from "@spp/constants/constants"
-import useToggle from "@spp/hooks/useToggle"
-import CancelIcon from "@mui/icons-material/CancelOutlined"
-import { useState } from "react"
-import {
-	Accordion,
-	AccordionDetails,
-	AccordionActions,
-	AccordionSummary
-} from "@mui/material"
+import { Box, Typography } from "@mui/material"
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
-import Button from "@mui/material/Button"
-import MenuList from "./menu-item"
-import Image from "next/image"
 import useMenu from "@spp/hooks/useMenu"
 import MenuItem from "./menu-item"
 import AddToCartDrawer from "./add-to-cart-drawer"

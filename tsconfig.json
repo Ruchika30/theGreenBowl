@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"noImplicitAny": false,
 		"target": "es5",
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
@@ -24,7 +25,8 @@
 		"paths": {
 			"@spp/*": ["./src/*"],
 			"types/*": ["./@types/*"]
-		}
+		},
+		"noEmitOnError": true // Prevents emitting output files on error
 	},
 	"include": [
 		"next-env.d.ts",

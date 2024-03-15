@@ -1,14 +1,30 @@
 import React, { useContext, FC, useState } from "react"
 
-const CartContext = React.createContext(undefined)
-const useCartContext = () => {
-	const context = useContext(CartContext)
+interface Total {
+	// Define the structure of your total object
+}
 
-	if (!context) {
-		throw new Error("useCartContext must be used within a CartProvider")
-	}
+interface UserOptions {
+	dontSendCutlery: boolean
+	dontSendNapkins: boolean
+	useOldAddress: boolean
+}
 
-	return context
+interface Product {
+	// Define the structure of your product object
+}
+
+interface ContextState {
+	isOpen: boolean
+	setIsOpen: (isOpen: boolean) => void
+	products: Product[]
+	selectedProduct: Product | null
+	setSelectedProduct: (product: Product | null) => void
+	total: Total
+	userOptions: UserOptions
+	setUserOptions: (prevFormData: any) => any
+	userAddress: string
+	setUserAddress: (address: string) => void // Define the setter function
 }
 
 const totalInitialValues = {
@@ -19,7 +35,36 @@ const totalInitialValues = {
 	currencyFormat: "$"
 }
 
-const CartProvider: FC = (props) => {
+const initialState: ContextState = {
+	isOpen: false,
+	products: [],
+	selectedProduct: null, // Or initial selected product
+	total: totalInitialValues,
+	userOptions: {
+		dontSendCutlery: false,
+		dontSendNapkins: false,
+		useOldAddress: false
+	},
+	userAddress: "",
+	setIsOpen: () => {}, // Define setIsOpen setter function
+	setSelectedProduct: () => {}, // Define setSelectedProduct setter function
+	setUserOptions: () => {}, // Define setUserOptions setter function
+	setUserAddress: () => {}
+}
+
+const CartContext = React.createContext<ContextState>(initialState)
+
+const useCartContext = () => {
+	const context = useContext(CartContext)
+
+	if (!context) {
+		throw new Error("useCartContext must be used within a CartProvider")
+	}
+
+	return context
+}
+
+const CartProvider: FC = (props: any) => {
 	const [isOpen, setIsOpen] = useState(false)
 	const [products, setProducts] = useState([])
 	const [selectedProduct, setSelectedProduct] = useState({})
