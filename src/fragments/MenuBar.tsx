@@ -5,6 +5,7 @@ import Image from "next/image"
 import NextLink from "next/link"
 import {
 	Box,
+	AppBar as MuiAppBar,
 	IconButton,
 	Typography,
 	Toolbar,
@@ -32,6 +33,24 @@ const StyledLogo = styled(Box)(({ theme }) => ({
 	display: "flex",
 	justifyContent: "center",
 	alignItems: "center"
+}))
+
+export const AppBar = styled(MuiAppBar, {
+	shouldForwardProp: (prop) => prop !== "authState"
+})<{ authState: Props["authState"] }>(({ theme, authState }) => ({
+	borderLeft: "none",
+	zIndex: theme.zIndex.drawer + 1,
+	backgroundColor: theme.palette.background.paper,
+	maxWidth:
+		authState === "authenticated"
+			? `calc(100vw - ${Constants.DRAWER_MD_WIDTH}px)`
+			: "100vw",
+	[theme.breakpoints.up("xl")]: {
+		maxWidth:
+			authState === "authenticated"
+				? `calc(100vw - ${Constants.DRAWER_WIDTH}px)`
+				: "100vw"
+	}
 }))
 
 function MenuNavBar() {
@@ -65,67 +84,69 @@ function MenuNavBar() {
 	}
 
 	return (
-		<>
-			{openMenu ? (
-				<IconButton onClick={setCloseMenu}>
-					<StyledMenu px={1} borderRadius={4}>
-						<Typography variant="SPP_Body_1" color="white">
-							Menu
-						</Typography>
-					</StyledMenu>
-				</IconButton>
-			) : (
-				<IconButton onClick={onMenuClick}>
-					<StyledMenu px={1} borderRadius={4}>
-						<Typography variant="SPP_Body_1" color="white">
-							Menu
-						</Typography>
-					</StyledMenu>
-				</IconButton>
-			)}
-
-			<Box ml={2} sx={{ flexGrow: 1 }} />
-
-			{/* Logo */}
-
-			{openContactUs ? (
-				<StyledLogo>
-					<IconButton onClick={closeContactUs} sx={{ padding: 0 }}>
-						<CancelIcon />
+		<AppBar elevation={0} position="fixed" variant="outlined">
+			<Toolbar>
+				{openMenu ? (
+					<IconButton onClick={setCloseMenu}>
+						<StyledMenu px={1} borderRadius={4}>
+							<Typography variant="SPP_Body_1" color="white">
+								Menu
+							</Typography>
+						</StyledMenu>
 					</IconButton>
-				</StyledLogo>
-			) : (
-				<IconButton onClick={setContactUs} sx={{ padding: 0 }}>
-					<Image
-						src="logo.png"
-						alt="App Logo"
-						width={55}
-						height={45}
-						priority
-					/>
-				</IconButton>
-			)}
+				) : (
+					<IconButton onClick={onMenuClick}>
+						<StyledMenu px={1} borderRadius={4}>
+							<Typography variant="SPP_Body_1" color="white">
+								Menu
+							</Typography>
+						</StyledMenu>
+					</IconButton>
+				)}
 
-			{/* Anchor menu */}
-			<Menu anchorEl={anchorElement} open={openMenu} onClose={setCloseMenu}>
-				{categoriesData?.map((item) => {
-					return (
-						<MenuItem key={item.id}>
-							<Link
-								href="#"
-								onClick={() => handleClick({ sectionId: item.name })}
-								component={NextLink}
-								underline="none"
-							>
-								<Typography color="secondary">{item.name}</Typography>
-							</Link>
-						</MenuItem>
-					)
-				})}
-			</Menu>
+				<Box ml={2} sx={{ flexGrow: 1 }} />
 
-			<ContactUsDrawer isOpen={openContactUs} />
-		</>
+				{/* Logo */}
+
+				{openContactUs ? (
+					<StyledLogo>
+						<IconButton onClick={closeContactUs} sx={{ padding: 0 }}>
+							<CancelIcon />
+						</IconButton>
+					</StyledLogo>
+				) : (
+					<IconButton onClick={setContactUs} sx={{ padding: 0 }}>
+						<Image
+							src="logo.png"
+							alt="App Logo"
+							width={55}
+							height={45}
+							priority
+						/>
+					</IconButton>
+				)}
+
+				{/* Anchor menu */}
+				<Menu anchorEl={anchorElement} open={openMenu} onClose={setCloseMenu}>
+					{categoriesData?.map((item) => {
+						return (
+							<MenuItem key={item.id}>
+								<Link
+									href="#"
+									onClick={() => handleClick({ sectionId: item.name })}
+									component={NextLink}
+									underline="none"
+								>
+									<Typography color="secondary">{item.name}</Typography>
+								</Link>
+							</MenuItem>
+						)
+					})}
+				</Menu>
+
+				<ContactUsDrawer isOpen={openContactUs} />
+			</Toolbar>
+		</AppBar>
 	)
 }
 
