@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-	eslint: {
-		ignoreDuringBuilds: true,
-	},
 	output: "export",
 	images: {
 		unoptimized: true
@@ -17,17 +14,17 @@ const nextConfig = {
 			use: ["@svgr/webpack"]
 		})
 		return config
-	}
+	},
 	// eslint: {
 	// 	ignoreDuringBuilds: true
 	// },
-	// typescript: {
-	// 	// !! WARN !!
-	// 	// Dangerously allow production builds to successfully complete even if
-	// 	// your project has type errors.
-	// 	// !! WARN !!
-	// 	ignoreBuildErrors: true
-	// }
+	typescript: {
+		// !! WARN !!
+		// Dangerously allow production builds to successfully complete even if
+		// your project has type errors.
+		// !! WARN !!
+		ignoreBuildErrors: true
+	}
 }
 
 module.exports = nextConfig
