@@ -6,7 +6,7 @@ import { Box, styled, Typography, Link } from "@mui/material"
 import NextLink from "next/link"
 import Image from "next/image"
 
-const StyledContainer = styled(Box)(({ theme }) => ({
+const StyledContainer = styled(Box)(() => ({
 	backgroundColor: "#EBEEF1"
 }))
 

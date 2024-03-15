@@ -2,11 +2,6 @@ import React from "react"
 
 import AppContext from "./AppContext"
 
-import { FETCH_APP_ENUMS } from "@spp/app/queries"
-import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr"
-
-import { BusinessType, Currency, MarketRegions } from "types/typings"
-
 interface Props {
 	children: React.ReactNode
 }
@@ -19,12 +14,12 @@ export default function AppProvider({ children }: Props) {
 		marketRegions: [],
 		businessTypes: []
 	})
-	const [currency, setCurrency] = React.useState<Currency["code"] | null>(null)
+	const [currency, setCurrency] = React.useState(null)
 
 	React.useEffect(() => {
 		if (data) {
 			setAppConstants({
-				currency: data.currencies.map((currency: Currency) => ({
+				currency: data.currencies.map((currency) => ({
 					...currency,
 					id: currency?.code,
 					name: currency?.code

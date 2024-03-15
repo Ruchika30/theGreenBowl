@@ -11,21 +11,20 @@ import {
 	List,
 	ListItem
 } from "@mui/material"
-import IncrementOperator from "./increment-operator"
 import Image from "next/image"
 import { enqueueSnackbar } from "notistack"
 import { isSafeArray } from "@spp/helpers/Utils"
 import { useCart } from "@spp/context/cart-context"
 import NextLink from "next/link"
 
-const StyledContainer = styled(Box)(({ theme }) => ({
+const StyledContainer = styled(Box)(() => ({
 	display: "flex",
 	justifyContent: "space-between",
 	alignItems: "center",
 	width: "100%"
 }))
 
-const Wrapper = styled(Box)(({ theme }) => ({
+const Wrapper = styled(Box)(() => ({
 	display: "flex",
 	justifyContent: "space-between",
 	alignItems: "center"

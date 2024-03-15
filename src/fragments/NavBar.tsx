@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React from "react"
 import {
 	AppBar as MuiAppBar,
 	IconButton,
@@ -22,7 +22,7 @@ export const AppBar = styled(MuiAppBar, {
 		maxWidth: "100vw"
 	}
 }))
-export default function NavBar({ type = "basic" }) {
+export default function NavBar() {
 	const router = useRouter()
 
 	return (

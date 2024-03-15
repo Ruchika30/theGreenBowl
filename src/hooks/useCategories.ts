@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { queryKeys } from "@spp/constants/queryKeys"
 import { getCategories } from "@spp/services/products/getCategories"

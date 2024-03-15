@@ -1,4 +1,4 @@
-import { Box, styled, Grid, Typography, Button } from "@mui/material"
+import { Box, styled, Grid, Typography } from "@mui/material"
 import ChipElement from "@spp/components/elements/ChipElement"
 import LineClampTypography from "@spp/components/elements/LineClampTypography"
 import { useCart } from "@spp/context/cart-context"
@@ -31,10 +31,9 @@ const AddButton = styled(Box)({
 	textAlign: "center"
 })
 function MenuItem({ product }) {
-	const { openCart, addProduct, setSelectedProduct } = useCart()
+	const { openCart, setSelectedProduct } = useCart()
 
-	const handleAdd = (e) => {
-		// addProduct({ ...product, quantity: 1 })
+	const handleAdd = () => {
 		openCart()
 		setSelectedProduct(product)
 	}

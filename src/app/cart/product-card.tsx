@@ -12,12 +12,8 @@ const StyledContainer = styled(Box)({
 })
 
 function ProductCard({ product }) {
-	const {
-		total,
-		increaseProductQuantity,
-		decreaseProductQuantity,
-		removeProduct
-	} = useCart()
+	const { increaseProductQuantity, decreaseProductQuantity, removeProduct } =
+		useCart()
 
 	const getTotalAmount = (product) => {
 		const { variant = "", quantity = "" } = product

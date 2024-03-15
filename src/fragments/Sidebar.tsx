@@ -2,7 +2,6 @@ import React from "react"
 
 // import { Link, useLocation } from "react-router-dom"
 
-import routes from "../constants/routes"
 import { Constants } from "../constants/constants"
 
 import {
@@ -20,8 +19,6 @@ import {
 
 import MenuIcon from "@mui/icons-material/Menu"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
-
-import AuthContext from "../context/AuthContext"
 
 const openedMixin = (theme) => ({
 	width: Constants.MENU_DRAWER_WIDTH,
@@ -52,13 +49,6 @@ const DrawerHeader = styled(Box)(({ theme }) => ({
 	...theme.mixins.toolbar
 }))
 
-const Indicator = styled(Box)(({ theme }) => ({
-	position: "absolute",
-	backgroundColor: theme.palette.primary.dark,
-	height: "100%",
-	width: 4
-}))
-
 const Drawer = styled(MuiDrawer, {
 	shouldForwardProp: (prop) => prop !== "open"
 })(({ theme, open }) => ({
@@ -77,8 +67,6 @@ const Drawer = styled(MuiDrawer, {
 }))
 
 export default function SideBar({ isDrawerOpen, setIsDrawerOpen }) {
-	const { userRole } = React.useContext(AuthContext)
-
 	const toggleSideBar = () => setIsDrawerOpen((v) => !v)
 
 	return (

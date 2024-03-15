@@ -46,36 +46,12 @@ function Address() {
 		}
 	}
 
-	const validateForm = () => {
-		let valid = true
-		const newErrors = {}
-
-		for (const fieldName in formData) {
-			const errorMessage = validateField(fieldName, formData[fieldName])
-
-			if (errorMessage) {
-				newErrors[fieldName] = errorMessage
-				valid = false
-			}
-		}
-
-		setErrors(newErrors)
-		return valid
-	}
-
 	const handleBlur = (fieldName) => {
 		const errorMessage = validateField(fieldName, formData[fieldName])
 		setErrors((prevErrors) => ({
 			...prevErrors,
 			[fieldName]: errorMessage
 		}))
-	}
-
-	const handleProceed = () => {
-		if (validateForm()) {
-			// Proceed with form submission
-			console.log("Form submitted successfully")
-		}
 	}
 
 	const checkValidity = () => {

@@ -1,6 +1,4 @@
 import { Box, styled, Typography } from "@mui/material"
-import { useCart } from "@spp/context/cart-context"
-import { useState } from "react"
 
 function IncrementOperator({
 	product,
@@ -10,7 +8,7 @@ function IncrementOperator({
 }) {
 	const defaultQty = 1
 
-	const StyledContainer = styled(Box)(({ theme }) => ({
+	const StyledContainer = styled(Box)(() => ({
 		// backgroundColor: theme.palette.customColors.pastelGreen,
 		display: "flex",
 		alignItems: "center",

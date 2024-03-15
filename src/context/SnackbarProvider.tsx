@@ -1,18 +1,16 @@
 import React, { useState, createContext } from "react"
 import { Button, Link } from "@mui/material"
 import NextLink from "next/link"
-import { useCart } from "./cart-context"
 import { Snackbar } from "@mui/material"
-import { useSnackbar } from "notistack"
+// import { useSnackbar } from "notistack"
 
 const SnackbarContext = createContext(false)
 
 // Create a provider component to wrap your application
-export const SnackbarProvider = ({ children, message, variant }) => {
-	const { total } = useCart()
+export const SnackbarProvider = ({ children }) => {
 	const [showContent, setShowContent] = useState(false)
 	const [state, setState] = useState({ message: "", variant: "default" })
-	const { closeSnackbar } = useSnackbar()
+	// const { closeSnackbar } = useSnackbar()
 
 	const action = (
 		<>
