@@ -3,6 +3,7 @@
 import React from "react"
 import NavBar from "@spp/fragments/NavBar"
 import { Toolbar, Box } from "@mui/material"
+import MenuNavBar from "@spp/fragments/MenuBar"
 
 interface Props {
 	children: React.ReactNode
@@ -11,7 +12,7 @@ interface Props {
 export default function DashboardLayout({ children }: Props) {
 	return (
 		<Box p={1}>
-			<NavBar type="menu" />
+			<MenuNavBar />
 
 			<Box component="main" sx={{ flexGrow: 1 }}>
 				<Toolbar />
