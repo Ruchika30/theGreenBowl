@@ -28,12 +28,13 @@ import Image from "next/image"
 import useMenu from "@spp/hooks/useMenu"
 import MenuItem from "./menu-item"
 import AddToCartDrawer from "./add-to-cart-drawer"
+import Loading from "@spp/app/loading"
 
 function FoodMenu() {
 	const { menuData, isLoadingMenu, menuError } = useMenu()
 
 	if (isLoadingMenu) {
-		return <Typography>Loading!</Typography>
+		return <Loading />
 	}
 
 	if (menuError) {

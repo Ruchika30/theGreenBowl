@@ -1,9 +1,9 @@
-import { useState } from "react"
-import { Box, styled, Grid, Typography } from "@mui/material"
+import { Box, styled, Grid, Typography, Button } from "@mui/material"
 import ChipElement from "@spp/components/elements/ChipElement"
 import LineClampTypography from "@spp/components/elements/LineClampTypography"
 import { useCart } from "@spp/context/cart-context"
 import Image from "next/image"
+import { ic_nonveg, ic_veg } from "../../../icons"
 
 const StyledContainer = styled(Box)({
 	flex: 1,
@@ -24,6 +24,12 @@ const StyledAdd = styled(Box)({
 	background: "orange"
 })
 
+const AddButton = styled(Box)({
+	background: "orange",
+	width: "100px",
+	borderRadius: "2px",
+	textAlign: "center"
+})
 function MenuItem({ product }) {
 	const { openCart, addProduct, setSelectedProduct } = useCart()
 
@@ -33,31 +39,74 @@ function MenuItem({ product }) {
 		setSelectedProduct(product)
 	}
 
+	const getVegIcon = () => {
+		return (
+			<Image
+				src={ic_veg}
+				alt="veg/nonveg icon"
+				width={15}
+				height={15}
+				priority
+			/>
+		)
+	}
+
+	const getNonVegIcon = () => {
+		return (
+			<Image
+				src={ic_nonveg}
+				alt="veg/nonveg icon"
+				width={15}
+				height={15}
+				priority
+			/>
+		)
+	}
+
+	const getProductType = () => {
+		// if product is superbowl then return both icons
+		if (product.categoryType == 2) {
+			return (
+				<Box sx={{ display: "flex" }}>
+					{getVegIcon()}
+					{getNonVegIcon()}
+				</Box>
+			)
+		}
+		return product.veg ? getVegIcon() : getNonVegIcon()
+	}
+
 	return (
 		<>
 			<Box mb={4}>
 				<Box sx={{ display: "flex", flex: 1, flexDirection: "row-reverse" }}>
-					<Box
-						sx={{
-							height: "150px",
-							width: "150px",
-							background: "lightSteelBlue",
-							position: "relative"
-						}}
-					>
-						<Image
-							// src={product.image}
-							src="https://res.cloudinary.com/avantika-server/image/upload/v1708843958/Sweet_Summer_llh42w.jpg"
-							alt="food_img"
-							// width={150}
-							// height={140}
-							layout="fill"
-							objectFit="cover"
-							priority
-						/>
+					{product.image ? (
+						<Box
+							sx={{
+								height: "150px",
+								width: "150px",
+								background: "lightSteelBlue",
+								position: "relative"
+							}}
+						>
+							<Image
+								src={product.image}
+								// src="https://res.cloudinary.com/avantika-server/image/upload/v1708843958/Sweet_Summer_llh42w.jpg"
+								alt="food_img"
+								// width={150}
+								// height={140}
+								layout="fill"
+								objectFit="cover"
+								priority
+							/>
 
-						<StyledAdd onClick={(e) => handleAdd(e)}>Add+</StyledAdd>
-					</Box>
+							<StyledAdd onClick={(e) => handleAdd(e)}>Add+</StyledAdd>
+						</Box>
+					) : (
+						<Box sx={{ display: "flex", alignItems: "center" }}>
+							<AddButton onClick={(e) => handleAdd(e)}>Add+</AddButton>
+						</Box>
+					)}
 
 					<StyledContainer pr={1}>
 						<Box>
@@ -72,35 +121,30 @@ function MenuItem({ product }) {
 									<ChipElement color="red" text={product.tag || ""} />
 								</Box>
 
-								<Image
-									src="https://dummyimage.com/15x15/000/fff"
-									alt="veg/nonveg icon"
-									width={15}
-									height={15}
-									priority
-								/>
+								<>{getProductType()}</>
 							</Box>
 
 							<Typography variant="SPP_Caption" color="secondary" mt={1}>
 								{product.itemName}
 							</Typography>
 
-							<LineClampTypography
-								sx={{ lineHeight: "15px", fontSize: "11px" }}
-								lines={2}
-								variant="SPP_Body_2"
-								color="secondary"
-								mt={1}
-							>
-								{product.description}
-							</LineClampTypography>
-
+							{!!product.description && (
+								<LineClampTypography
+									sx={{ lineHeight: "15px", fontSize: "11px" }}
+									lines={2}
+									variant="SPP_Body_2"
+									color="secondary"
+									mt={1}
+								>
+									{product.description}
+								</LineClampTypography>
+							)}
 							<Typography pt={1} variant="SPP_Caption" color="secondary">
 								Rs.{product.price[0].value}
 							</Typography>
 
 							<Grid container spacing={1} mt={1}>
-								<Grid item xs={6}>
+								{/*<Grid item xs={6}>
 									<Typography variant="SPP_Display_2" color="secondary">
 										Energy: 1001kcal
 									</Typography>
@@ -120,7 +164,7 @@ function MenuItem({ product }) {
 									<Typography variant="SPP_Display_2" color="secondary">
 										Carbs: 1001kcal
 									</Typography>
-								</Grid>
+								</Grid> */}
 							</Grid>
 						</Box>
 					</StyledContainer>

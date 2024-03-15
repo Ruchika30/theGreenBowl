@@ -94,24 +94,26 @@ function AddToCartDrawer() {
 				sx={{ zIndex: 1500 }}
 			>
 				<Box>
-					<Box
-						sx={{
-							border: "1px solid lightgrey",
-							borderRadius: "5px",
-							height: "200px",
-							position: "relative" // Add position relative to contain the image
-						}}
-						m={1}
-					>
-						<Image
-							src="https://res.cloudinary.com/avantika-server/image/upload/v1708843958/Sweet_Summer_llh42w.jpg"
-							alt="App Logo"
-							layout="fill" // Fill the entire container
-							objectFit="cover"
-							priority
-						/>
-					</Box>
-
+					{selectedProduct.image && (
+						<Box
+							sx={{
+								border: "1px solid lightgrey",
+								borderRadius: "5px",
+								height: "200px",
+								position: "relative" // Add position relative to contain the image
+							}}
+							m={1}
+						>
+							<Image
+								src={selectedProduct.image}
+								// src="https://res.cloudinary.com/avantika-server/image/upload/v1708843958/Sweet_Summer_llh42w.jpg"
+								alt="App Logo"
+								layout="fill" // Fill the entire container
+								objectFit="cover"
+								priority
+							/>
+						</Box>
+					)}
 					<Box
 						sx={{ border: "1px solid lightgrey", borderRadius: "5px" }}
 						m={1}
