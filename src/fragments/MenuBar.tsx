@@ -12,7 +12,8 @@ import {
 	Menu,
 	MenuItem,
 	Link,
-	styled
+	styled,
+	BoxProps
 } from "@mui/material"
 import useToggle from "@spp/hooks/useToggle"
 import CancelIcon from "@mui/icons-material/CancelOutlined"
@@ -20,10 +21,15 @@ import ContactUsDrawer from "../app/(dashboard)/contact-us-drawer"
 import { useCategories } from "@spp/hooks/useCategories"
 import { isSafeArray } from "@spp/helpers/Utils"
 
-const StyledMenu = styled(Box)({
+interface StyledMenuProps extends BoxProps {
+	visibility?: string
+}
+
+const StyledMenu = styled(Box)<StyledMenuProps>(({ visibility }) => ({
 	background: "black",
-	color: "contrastText"
-})
+	color: "contrastText",
+	visibility: visibility
+}))
 
 const StyledLogo = styled(Box)(() => ({
 	height: "45px",
@@ -67,10 +73,15 @@ function MenuNavBar() {
 	}
 
 	const handleClick = ({ sectionId }) => {
+		const id = sectionId.replaceAll(" ", "-")
 		setCloseMenu()
-		const targetSection = document.getElementById(sectionId)
+		const targetSection = document.getElementById(id)
+
 		if (targetSection) {
-			targetSection.scrollIntoView({ behavior: "smooth", block: "start" })
+			setTimeout(() => {
+				/* scroll after the section is loaded */
+				targetSection.scrollIntoView({ behavior: "smooth", block: "start" })
+			}, 500)
 		}
 	}
 
@@ -87,7 +98,11 @@ function MenuNavBar() {
 					</IconButton>
 				) : (
 					<IconButton onClick={onMenuClick}>
-						<StyledMenu px={1} borderRadius={4}>
+						<StyledMenu
+							visibility={openContactUs ? "hidden" : "visible"}
+							px={1}
+							borderRadius={4}
+						>
 							<Typography variant="SPP_Body_1" color="white">
 								Menu
 							</Typography>
@@ -121,6 +136,8 @@ function MenuNavBar() {
 				<Menu anchorEl={anchorElement} open={openMenu} onClose={setCloseMenu}>
 					{isSafeArray(categoriesData)
 						? categoriesData?.map((item) => {
+								console.log("item--", item)
+
 								return (
 									<MenuItem key={item.id}>
 										<Link

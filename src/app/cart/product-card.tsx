@@ -3,6 +3,7 @@ import Image from "next/image"
 import IncrementOperator from "../(dashboard)/dashboard/increment-operator"
 import { useCart } from "@spp/context/cart-context"
 import { isSafeArray } from "@spp/helpers/Utils"
+import { ic_nonveg, ic_veg } from "@spp/icons"
 
 const StyledContainer = styled(Box)({
 	flex: 1,
@@ -31,6 +32,38 @@ function ProductCard({ product }) {
 		} else removeProduct(product)
 	}
 
+	const getVegIcon = () => {
+		return (
+			<Image
+				src={ic_veg}
+				alt="veg/nonveg icon"
+				width={15}
+				height={15}
+				priority
+			/>
+		)
+	}
+
+	const getNonVegIcon = () => {
+		return (
+			<Image
+				src={ic_nonveg}
+				alt="veg/nonveg icon"
+				width={15}
+				height={15}
+				priority
+			/>
+		)
+	}
+
+	const getProductType = () => {
+		/* If product is superbowl then return both icons */
+		if (product.categoryType == 2) {
+			return null
+		}
+		return product.veg ? getVegIcon() : getNonVegIcon()
+	}
+
 	return (
 		<>
 			<Box mb={4}>
@@ -45,13 +78,7 @@ function ProductCard({ product }) {
 										justifyContent: "space-between"
 									}}
 								>
-									<Image
-										src="https://dummyimage.com/15x15/000/fff"
-										alt="veg/nonveg icon"
-										width={15}
-										height={15}
-										priority
-									/>
+									<>{getProductType()}</>
 								</Box>
 
 								<Box ml={1}>

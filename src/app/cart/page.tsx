@@ -28,8 +28,8 @@ function CartPage() {
 	const handleProceed = () => {}
 
 	const checkboxOptions = [
-		{ name: "dontSendCutlery", label: "Do not send cutlery" },
-		{ name: "dontSendNapkins", label: "Do not send napkins" },
+		{ name: "dontSendCutlery", label: "Don't send cutlery" },
+		{ name: "dontSendNapkins", label: "Don't send napkins & brown bag" },
 		{
 			name: "useOldAddress",
 			label: "I have ordered previously. Use same address"
@@ -171,30 +171,7 @@ function CartPage() {
 				</Typography>
 			)}
 
-			<Box sx={{ width: "100%" }}>
-				{getButton()}
-				{/* <Button
-					style={{ width: "100%" }}
-					onClick={handleProceed}
-					variant="contained"
-					color="primary"
-					type="submit"
-					// disabled={isSubmitting}
-				>
-					{!isSafeArray(products) ? (
-						<Link
-							href={"/dashboard"}
-							component={NextLink}
-							underline="none"
-							color="white"
-						>
-							Go Back
-						</Link>
-					) : (
-						getButton()
-					)}
-				</Button> */}
-			</Box>
+			<Box sx={{ width: "100%" }}>{getButton()}</Box>
 		</Box>
 	)
 }

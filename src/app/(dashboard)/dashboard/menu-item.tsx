@@ -3,7 +3,7 @@ import ChipElement from "@spp/components/elements/ChipElement"
 import LineClampTypography from "@spp/components/elements/LineClampTypography"
 import { useCart } from "@spp/context/cart-context"
 import Image from "next/image"
-import { ic_nonveg, ic_veg } from "../../../icons"
+import { ic_nonveg, ic_veg } from "@spp/icons"
 
 const StyledContainer = styled(Box)({
 	flex: 1,
@@ -22,6 +22,13 @@ const StyledAdd = styled(Box)({
 	textAlign: "center",
 	borderRadius: "2px",
 	background: "orange"
+})
+
+const StyledImageBox = styled(Box)({
+	height: "150px",
+	width: "150px",
+	background: "lightSteelBlue",
+	position: "relative"
 })
 
 const AddButton = styled(Box)({
@@ -63,7 +70,7 @@ function MenuItem({ product }) {
 	}
 
 	const getProductType = () => {
-		// if product is superbowl then return both icons
+		/* If product is superbowl then return both icons */
 		if (product.categoryType == 2) {
 			return (
 				<Box sx={{ display: "flex" }}>
@@ -80,27 +87,17 @@ function MenuItem({ product }) {
 			<Box mb={4}>
 				<Box sx={{ display: "flex", flex: 1, flexDirection: "row-reverse" }}>
 					{product.image ? (
-						<Box
-							sx={{
-								height: "150px",
-								width: "150px",
-								background: "lightSteelBlue",
-								position: "relative"
-							}}
-						>
+						<StyledImageBox onClick={(e) => handleAdd(e)}>
 							<Image
 								src={product.image}
-								// src="https://res.cloudinary.com/avantika-server/image/upload/v1708843958/Sweet_Summer_llh42w.jpg"
 								alt="food_img"
-								// width={150}
-								// height={140}
 								layout="fill"
 								objectFit="cover"
 								priority
 							/>
 
 							<StyledAdd onClick={(e) => handleAdd(e)}>Add+</StyledAdd>
-						</Box>
+						</StyledImageBox>
 					) : (
 						<Box sx={{ display: "flex", alignItems: "center" }}>
 							<AddButton onClick={(e) => handleAdd(e)}>Add+</AddButton>

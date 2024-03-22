@@ -9,13 +9,17 @@ import {
 	Typography,
 	styled,
 	List,
-	ListItem
+	ListItem,
+	FormControlLabel,
+	IconButton
 } from "@mui/material"
 import Image from "next/image"
 import { enqueueSnackbar } from "notistack"
 import { isSafeArray } from "@spp/helpers/Utils"
 import { useCart } from "@spp/context/cart-context"
 import NextLink from "next/link"
+import { ic_nonveg, ic_veg } from "../../../icons"
+import CloseIcon from "@mui/icons-material/Close"
 
 const StyledContainer = styled(Box)(() => ({
 	display: "flex",
@@ -31,7 +35,13 @@ const Wrapper = styled(Box)(() => ({
 }))
 
 function AddToCartDrawer() {
-	const { addProduct, selectedProduct, isOpen, closeCart, total } = useCart()
+	const {
+		addProduct,
+		selectedProduct = {},
+		isOpen,
+		closeCart,
+		total
+	} = useCart()
 	const [variant, setVariant] = useState()
 	const [selectedOption, setSelectedOption] = useState()
 
@@ -84,59 +94,140 @@ function AddToCartDrawer() {
 		closeCart()
 	}
 
+	const getVegIcon = () => {
+		return (
+			<Image
+				src={ic_veg}
+				alt="veg/nonveg icon"
+				width={15}
+				height={15}
+				priority
+			/>
+		)
+	}
+
+	const getNonVegIcon = () => {
+		return (
+			<Image
+				src={ic_nonveg}
+				alt="veg/nonveg icon"
+				width={15}
+				height={15}
+				priority
+			/>
+		)
+	}
+
+	const getProductType = () => {
+		/* If product is superbowl then return both icons */
+		if (selectedProduct.categoryType == 2) {
+			return (
+				<Box sx={{ display: "flex" }}>
+					{getVegIcon()}
+					{getNonVegIcon()}
+				</Box>
+			)
+		}
+		return selectedProduct.veg ? getVegIcon() : getNonVegIcon()
+	}
+
 	return (
 		<>
 			<Drawer
 				anchor="bottom"
 				open={isOpen}
 				onClose={closeCart}
-				sx={{ zIndex: 1500 }}
+				sx={{ zIndex: 1500, position: "relative" }}
 			>
-				<Box>
-					{selectedProduct.image && (
-						<Box
-							sx={{
-								border: "1px solid lightgrey",
-								borderRadius: "5px",
-								height: "200px",
-								position: "relative" // Add position relative to contain the image
-							}}
-							m={1}
-						>
-							<Image
-								src={selectedProduct.image}
-								// src="https://res.cloudinary.com/avantika-server/image/upload/v1708843958/Sweet_Summer_llh42w.jpg"
-								alt="App Logo"
-								layout="fill" // Fill the entire container
-								objectFit="cover"
-								priority
-							/>
+				<Box
+					sx={{
+						marginLeft: "auto"
+					}}
+					mr={1}
+				>
+					<IconButton
+						onClick={closeCart}
+						sx={{
+							// background: "#000",
+							color: "#000",
+							// boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+							borderRadius: "50%",
+							zIndex: 1
+						}}
+					>
+						<CloseIcon fontSize="small" />
+					</IconButton>
+				</Box>
+
+				<Box sx={{ background: "transparent" }}>
+					<Box>
+						{selectedProduct.image && (
+							<Box
+								sx={{
+									border: "1px solid lightgrey",
+									borderRadius: "5px",
+									height: "200px",
+									position: "relative" // Add position relative to contain the image
+								}}
+								m={1}
+							>
+								<Image
+									src={selectedProduct.image}
+									alt="App Logo"
+									layout="fill" // Fill the entire container
+									objectFit="cover"
+									priority
+								/>
+							</Box>
+						)}
+
+						<Box m={1}>
+							<Box sx={{ display: "flex", alignItems: "flex-start" }}>
+								{getProductType()}
+								<Typography variant="SPP_Caption" color="secondary" ml={1}>
+									{selectedProduct.itemName}
+								</Typography>
+							</Box>
+							<Typography mt={1} variant="SPP_Body_2" color="secondary" ml={3}>
+								{selectedProduct.description}
+							</Typography>
 						</Box>
-					)}
+					</Box>
+
 					<Box
 						sx={{ border: "1px solid lightgrey", borderRadius: "5px" }}
 						m={1}
 					>
-						<List>
+						<List dense={true}>
 							{isSafeArray(selectedProduct.price) &&
 								selectedProduct.price.map((item) => {
 									return (
-										<ListItem key={item.id}>
+										<ListItem key={item.id} sx={{ marginBottom: "-6px" }}>
 											<StyledContainer>
 												<Typography variant="SPP_Body_1" color="secondary">
 													{item.name}
 												</Typography>
 												<Wrapper>
-													<Typography variant="SPP_Body_1" color="secondary">
-														Rs.{item.value}
-													</Typography>
-													<Radio
-														size="small"
-														checked={selectedOption == item.value}
-														onChange={(e) => handleChange(e, item)}
+													<FormControlLabel
 														value={item.value}
-														name="radio-buttons"
-														inputProps={{ "aria-label": "A" }}
+														control={
+															<Radio
+																size="small"
+																checked={selectedOption == item.value}
+																onChange={(e) => handleChange(e, item)}
+																name="radio-buttons"
+																inputProps={{ "aria-label": "A" }}
+															/>
+														}
+														label={
+															<Typography
+																variant="SPP_Body_1"
+																color="secondary"
+															>
+																Rs.{item.value}
+															</Typography>
+														}
+														labelPlacement="start"
 													/>
 												</Wrapper>
 											</StyledContainer>

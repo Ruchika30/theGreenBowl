@@ -25,7 +25,7 @@ function FoodMenu() {
 	return (
 		<>
 			{/* Menu main content */}
-			<Box>
+			<Box mb={8}>
 				{menuData?.map((item) => {
 					return (
 						<>
@@ -34,7 +34,7 @@ function FoodMenu() {
 									<AccordionSummary
 										expandIcon={<ExpandMoreIcon />}
 										aria-controls="panel1-content"
-										id={item.name}
+										id={item.name.replaceAll(" ", "-")}
 									>
 										{item.name}
 									</AccordionSummary>
